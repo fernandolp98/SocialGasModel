@@ -170,7 +170,7 @@ namespace Modelo
             for(int index = 0; index<_TSPIRoles.Count(); index++)
             {
                 var currentRole = _TSPIRoles.ElementAt(index);
-                if (index == 0)
+                if (true)
                 {
                     var guid = Guid.NewGuid();
                     var justNumbers = new String(guid.ToString().Where(Char.IsDigit).ToArray());
