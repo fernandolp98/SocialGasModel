@@ -1,179 +1,182 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Modelo
 {
     public partial class Form1 : Form
     {
-        private List<TSPiRole> _TSPIRoles;
-        private double _gamma;
-        private double _ratio;
+        private readonly List<TSPiRole> _tspiRoles;
+        private readonly double _gamma;
+        //private double _ratio;
 
-        private double _xMax;
-        private double _yMax;
+        private readonly double _xMax;
+        private readonly double _yMax;
 
         public Form1()
         {
             InitializeComponent();
-            _TSPIRoles = new List<TSPiRole>
+            _tspiRoles = new List<TSPiRole>
             {
                 new TSPiRole()
                 {
+                    Index = 0,
                     Name = "TL",
-                    InteractiveStyles = new object[12,2]
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 5 },
-                        { "AT", 5 },
-                        { "FT", 5 },
-                        { "AP", 5 },
-                        { "FC", 3 },
-                        { "TT", 2 },
-                        { "CY", 3 },
-                        { "TR", 2 },
-                        { "DS", 5 },
-                        { "RS", 5 },
-                        { "IM", 1 },
-                        { "CR", 5 },
+                        { "DM", 5.0 },
+                        { "AT", 5.0 },
+                        { "FT", 5.0 },
+                        { "AP", 5.0 },
+                        { "FC", 3.0 },
+                        { "TT", 2.0 },
+                        { "CY", 3.0 },
+                        { "TR", 2.0 },
+                        { "DS", 5.0 },
+                        { "RS", 5.0 },
+                        { "IM", 1.0 },
+                        { "CR", 5.0 },
                     }
                 },
                 new TSPiRole()
                 {
+                    Index = 1,
                     Name = "PM",
-                    InteractiveStyles = new object[12,2]
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 4 },
-                        { "AT", 4 },
-                        { "FT", 4 },
-                        { "AP", 5 },
-                        { "FC", 3 },
-                        { "TT", 1 },
-                        { "CY", 1 },
-                        { "TR", 1 },
-                        { "DS", 3 },
-                        { "RS", 4 },
-                        { "IM", 1 },
-                        { "CR", 5 },
+                        { "DM", 4.0 },
+                        { "AT", 4.0 },
+                        { "FT", 4.0 },
+                        { "AP", 5.0 },
+                        { "FC", 3.0 },
+                        { "TT", 1.0 },
+                        { "CY", 1.0 },
+                        { "TR", 1.0 },
+                        { "DS", 3.0 },
+                        { "RS", 4.0 },
+                        { "IM", 1.0 },
+                        { "CR", 5.0 },
                     }
                 },
                 new TSPiRole()
                 {
+                    Index = 2,
                     Name = "QM",
-                    InteractiveStyles = new object[12,2]
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 4 },
-                        { "AT", 0 },
-                        { "FT", 4 },
-                        { "AP", 4 },
-                        { "FC", 1 },
-                        { "TT", 1 },
-                        { "CY", 2 },
-                        { "TR", 0 },
-                        { "DS", 4 },
-                        { "RS", 4 },
-                        { "IM", 0 },
-                        { "CR", 3 },
+                        { "DM", 4.0 },
+                        { "AT", 0.0 },
+                        { "FT", 4.0 },
+                        { "AP", 4.0 },
+                        { "FC", 1.0 },
+                        { "TT", 1.0 },
+                        { "CY", 2.0 },
+                        { "TR", 0.0 },
+                        { "DS", 4.0 },
+                        { "RS", 4.0 },
+                        { "IM", 0.0 },
+                        { "CR", 3.0 },
                     }
                 },
                 new TSPiRole()
                 {
+                    Index = 3,
                     Name = "SM",
-                    InteractiveStyles = new object[12,2]
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 5 },
-                        { "AT", 5 },
-                        { "FT", 5 },
-                        { "AP", 5 },
-                        { "FC", 3 },
-                        { "TT", 2 },
-                        { "CY", 3 },
-                        { "TR", 2 },
-                        { "DS", 5 },
-                        { "RS", 5 },
-                        { "IM", 1 },
-                        { "CR", 5 },
+                        { "DM", 5.0 },
+                        { "AT", 5.0 },
+                        { "FT", 5.0 },
+                        { "AP", 5.0 },
+                        { "FC", 3.0 },
+                        { "TT", 2.0 },
+                        { "CY", 3.0 },
+                        { "TR", 2.0 },
+                        { "DS", 5.0 },
+                        { "RS", 5.0 },
+                        { "IM", 1.0 },
+                        { "CR", 5.0 },
                     }
                 },
                 new TSPiRole()
                 {
+                    Index = 4,
                     Name = "DS",
-                    InteractiveStyles = new object[12,2]
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 3 },
-                        { "AT", 5 },
-                        { "FT", 5 },
-                        { "AP", 4 },
-                        { "FC", 5 },
-                        { "TT", 1 },
-                        { "CY", 5 },
-                        { "TR", 4 },
-                        { "DS", 4 },
-                        { "RS", 4 },
-                        { "IM", 3 },
-                        { "CR", 3 },
+                        { "DM", 3.0 },
+                        { "AT", 5.0 },
+                        { "FT", 5.0 },
+                        { "AP", 4.0 },
+                        { "FC", 5.0 },
+                        { "TT", 1.0 },
+                        { "CY", 5.0 },
+                        { "TR", 4.0 },
+                        { "DS", 4.0 },
+                        { "RS", 4.0 },
+                        { "IM", 3.0 },
+                        { "CR", 3.0 },
                     }
                 },
                 new TSPiRole()
                 {
+                    Index = 5,
                     Name = "IM",
-                    InteractiveStyles = new object[12,2]
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 4 },
-                        { "AT", 4 },
-                        { "FT", 4 },
-                        { "AP", 4 },
-                        { "FC", 4 },
-                        { "TT", 1 },
-                        { "CY", 4 },
-                        { "TR", 4 },
-                        { "DS", 3 },
-                        { "RS", 4 },
-                        { "IM", 3 },
-                        { "CR", 5 },
+                        { "DM", 4.0 },
+                        { "AT", 4.0 },
+                        { "FT", 4.0 },
+                        { "AP", 4.0 },
+                        { "FC", 4.0 },
+                        { "TT", 1.0 },
+                        { "CY", 4.0 },
+                        { "TR", 4.0 },
+                        { "DS", 3.0 },
+                        { "RS", 4.0 },
+                        { "IM", 3.0 },
+                        { "CR", 5.0 },
                     }
                 },
                 new TSPiRole()
                 {
-                    Name = "IM",
-                    InteractiveStyles = new object[12,2]
+                    Index = 7,
+                    Name = "TM",
+                    InteractiveStyles = new object[,]
                     {
-                        { "DM", 3 },
-                        { "AT", 5 },
-                        { "FT", 5 },
-                        { "AP", 4 },
-                        { "FC", 3 },
-                        { "TT", 2 },
-                        { "CY", 4 },
-                        { "TR", 4 },
-                        { "DS", 4 },
-                        { "RS", 4 },
-                        { "IM", 1 },
-                        { "CR", 1 },
+                        { "DM", 3.0 },
+                        { "AT", 5.0 },
+                        { "FT", 5.0 },
+                        { "AP", 4.0 },
+                        { "FC", 3.0 },
+                        { "TT", 2.0 },
+                        { "CY", 4.0 },
+                        { "TR", 4.0 },
+                        { "DS", 4.0 },
+                        { "RS", 4.0 },
+                        { "IM", 1.0 },
+                        { "CR", 1.0 },
                     }
                 }
             };
 
-            _gamma = 0.01;
-            _ratio = 1;
+            _gamma = 0.001;
+            //_ratio = 0;
             _xMax = 4;
             _yMax = 4;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            for(int index = 0; index<_TSPIRoles.Count(); index++)
+            for(var index = 0; index<_tspiRoles.Count(); index++)
             {
-                var currentRole = _TSPIRoles.ElementAt(index);
+                var currentRole = _tspiRoles.ElementAt(index);
                 if (true)
                 {
                     var guid = Guid.NewGuid();
-                    var justNumbers = new String(guid.ToString().Where(Char.IsDigit).ToArray());
+                    var justNumbers = new string(guid.ToString().Where(Char.IsDigit).ToArray());
                     var seed = int.Parse(justNumbers.Substring(0, 4));
                     var random = new Random(seed);
                     var xValue = random.NextDouble() * (_xMax - 0) + 0;
@@ -181,8 +184,105 @@ namespace Modelo
                     currentRole.X = xValue;
                     currentRole.Y = yValue;
                 }
-                Console.WriteLine($"{currentRole.Name} -> X: {currentRole.X}, Y: {currentRole.Y}");
+
+                PrintPoints(currentRole);
             }
+            UpdateChart();
+
+        }
+
+        private void PrintPoints(TSPiRole role)
+        {
+            Console.WriteLine($@"{role.Name} -> X: {role.X}, Y: {role.Y}");
+        }
+
+        private void UpdateChart()
+        {
+            chart1.Series.Clear();
+            for (var index = 0; index < _tspiRoles.Count(); index++)
+            {
+                var role = _tspiRoles.ElementAt(index);
+                var serie = new Series
+                {
+                    Name = role.Name,
+                    ChartType = SeriesChartType.Point,
+                };
+                serie.Points.AddXY(role.X, role.Y);
+                chart1.Series.Add(serie);
+            }
+        }
+
+        private void UpdatePoints()
+        {
+            Console.WriteLine(@"------------------------------------------------");
+            for (var index = 0; index < _tspiRoles.Count(); index++)
+            {
+                var rol = _tspiRoles.ElementAt(index);
+                rol.X = PosX(rol);
+                rol.Y = PosY(rol);
+                PrintPoints(rol);
+            }
+        }
+
+        private double PosX(TSPiRole rol)
+        {
+            //¿El rol anterior del primer rol (TL) es el último?
+            var precendingRol = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
+            var posX = precendingRol.X;//Se obtiene la posicion en X del rol anterior
+            var posY = precendingRol.Y;//Se obtiene la posicion en Y del rol anterior
+            var step1 = 0.0; //Primer suumatoria de la ecuación
+            var step2 = 0.0;//Segunda sumatoria de la ecuación
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var n = _tspiRoles[index];
+                if (n == precendingRol) continue;
+                var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
+                //if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
+                step1 += (n.X - posX) / d;
+            }
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var n = _tspiRoles[index];
+                if (n == rol) continue;
+                step2 += (double)n.InteractiveStyles[0, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+            }
+
+            var step3 = (double)rol.InteractiveStyles[0, 1] * step2;
+            var step4 = _gamma * step1 * step3;
+            var result = posX + step4;
+            return result;
+        }
+        private double PosY(TSPiRole rol)
+        {
+            //¿El rol anterior del primer rol (TL) es el último?
+            var precendingRol = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
+            var posX = precendingRol.X;//Se obtiene la posicion en X del rol anterior
+            var posY = precendingRol.Y;//Se obtiene la posicion en Y del rol anterior
+            var step1 = 0.0; //Primer sumatoria de la ecuación
+            var step2 = 0.0;//Segunda sumatoria de la ecuación
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var n = _tspiRoles[index];
+                if (n == precendingRol) continue;
+                var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
+                //if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
+                step1 += (n.Y - posY) / d;
+            }
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var n = _tspiRoles[index];
+                if (n == rol) continue;
+                step2 += (double)n.InteractiveStyles[0, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+            }
+            var step3 = (double)rol.InteractiveStyles[0, 1] * step2;
+            var step4 = _gamma * step1 * step3;
+            var result = posY + step4;
+            return result;
+        }
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            UpdatePoints();
+            UpdateChart();
         }
     }
 }

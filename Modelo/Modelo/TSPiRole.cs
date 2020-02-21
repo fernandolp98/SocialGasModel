@@ -11,6 +11,7 @@ namespace Modelo
         public string Name { get; set; }
         public object[,] InteractiveStyles { get; set; }
 
+        public int Index { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
 
