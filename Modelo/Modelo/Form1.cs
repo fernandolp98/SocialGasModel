@@ -14,6 +14,10 @@ namespace Modelo
 
         private readonly double _xMax;
         private readonly double _yMax;
+        //private readonly double _ratio;
+
+        private List<List<double[]>> _pointsHistory;
+        private int _currentIndexHistory;
 
         public Form1()
         {
@@ -162,17 +166,18 @@ namespace Modelo
                 }
             };
 
-            _gamma = 0.001;
+            _gamma = 0.01;
             //_ratio = 0;
             _xMax = 4;
             _yMax = 4;
+            _pointsHistory = new List<List<double[]>>();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            var points = new List<double[]>();
             for(var index = 0; index<_tspiRoles.Count(); index++)
             {
-                var currentRole = _tspiRoles.ElementAt(index);
                 if (true)
                 {
                     var guid = Guid.NewGuid();
@@ -181,18 +186,20 @@ namespace Modelo
                     var random = new Random(seed);
                     var xValue = random.NextDouble() * (_xMax - 0) + 0;
                     var yValue = random.NextDouble() * (_yMax - 0) + 0;
-                    currentRole.X = xValue;
-                    currentRole.Y = yValue;
+                    var newPoints = new [] {xValue, yValue};
+                    points.Add(newPoints);
                 }
-
-                PrintPoints(currentRole);
             }
-            UpdateChart();
 
+            _currentIndexHistory = 0;
+            _pointsHistory.Add(points);
+            UpdatePoints();
         }
 
         private void PrintPoints(TSPiRole role)
         {
+            if(role.Index == 0)
+                Console.WriteLine(@"------------------------------------------------");
             Console.WriteLine($@"{role.Name} -> X: {role.X}, Y: {role.Y}");
         }
 
@@ -212,16 +219,32 @@ namespace Modelo
             }
         }
 
-        private void UpdatePoints()
+        private void GetNextPoints()
         {
-            Console.WriteLine(@"------------------------------------------------");
+            var newPoints = new List<double[]>();
             for (var index = 0; index < _tspiRoles.Count(); index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
-                rol.X = PosX(rol);
-                rol.Y = PosY(rol);
+                var newPos = new[]{PosX(rol),PosY(rol)};
+                newPoints.Add(newPos);
+            }
+            _pointsHistory.Add(newPoints);
+            _currentIndexHistory = _pointsHistory.Count - 1;
+            UpdatePoints();
+        }
+
+        private void UpdatePoints()
+        {
+            var points = _pointsHistory.ElementAt(_currentIndexHistory);
+            for (var index = 0; index < _tspiRoles.Count(); index++)
+            {
+                var rol = _tspiRoles.ElementAt(index);
+                rol.X = points.ElementAt(index)[0];
+                rol.Y = points.ElementAt(index)[1];
                 PrintPoints(rol);
             }
+            UpdateChart();
+            lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count}";
         }
 
         private double PosX(TSPiRole rol)
@@ -279,10 +302,24 @@ namespace Modelo
             var result = posY + step4;
             return result;
         }
-        private void btnStart_Click(object sender, EventArgs e)
+
+        private void pboxAdd_Click(object sender, EventArgs e)
         {
+            GetNextPoints();
+        }
+
+        private void pboxPrevious_Click(object sender, EventArgs e)
+        {
+            if (_currentIndexHistory > 0)
+                _currentIndexHistory--;
             UpdatePoints();
-            UpdateChart();
+        }
+
+        private void pboxNext_Click(object sender, EventArgs e)
+        {
+            if (_currentIndexHistory < _pointsHistory.Count - 1)
+                _currentIndexHistory++;
+            UpdatePoints();
         }
     }
 }

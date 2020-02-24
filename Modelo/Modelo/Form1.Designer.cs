@@ -31,63 +31,187 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2.5D, "2.5,0");
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 2D);
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnStart = new System.Windows.Forms.Button();
+            this.pboxAdd = new System.Windows.Forms.PictureBox();
+            this.pboxNext = new System.Windows.Forms.PictureBox();
+            this.pboxPrevious = new System.Windows.Forms.PictureBox();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).BeginInit();
             this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblTime);
+            this.panel1.Controls.Add(this.pboxAdd);
+            this.panel1.Controls.Add(this.pboxNext);
+            this.panel1.Controls.Add(this.pboxPrevious);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(184, 636);
+            this.panel1.TabIndex = 2;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.chart1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(184, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(917, 636);
+            this.panel2.TabIndex = 3;
             // 
             // chart1
             // 
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisX.Interval = 0.5D;
+            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MajorGrid.Interval = 1D;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea1.AxisX.Maximum = 5D;
+            chartArea1.AxisX.Minimum = -2D;
+            chartArea1.AxisX.MinorGrid.Enabled = true;
+            chartArea1.AxisX.MinorGrid.Interval = 0.1D;
+            chartArea1.AxisX.MinorGrid.IntervalOffset = double.NaN;
+            chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea1.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
+            chartArea1.AxisX2.Interval = 1D;
+            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.Interval = 0.5D;
+            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MajorGrid.Interval = 1D;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea1.AxisY.Maximum = 5D;
+            chartArea1.AxisY.Minimum = -2D;
+            chartArea1.AxisY.MinorGrid.Enabled = true;
+            chartArea1.AxisY.MinorGrid.Interval = 0.1D;
+            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea1.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea1.BackColor = System.Drawing.Color.DimGray;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.BackColor = System.Drawing.Color.Gray;
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(12, 12);
+            this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
+            series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series1.LabelAngle = 90;
+            series1.LabelBackColor = System.Drawing.Color.DimGray;
+            series1.LabelForeColor = System.Drawing.Color.White;
             series1.Legend = "Legend1";
-            series1.Name = "Series1";
+            series1.Name = "Serie";
             series1.Points.Add(dataPoint1);
+            series1.XValueMember = "10";
+            series1.YValueMembers = "10";
             series1.YValuesPerPoint = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            series2.Points.Add(dataPoint2);
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(1057, 562);
-            this.chart1.TabIndex = 0;
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(917, 636);
+            this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
             // 
-            // btnStart
+            // pboxAdd
             // 
-            this.btnStart.Location = new System.Drawing.Point(994, 601);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 1;
-            this.btnStart.Text = "Starp";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            this.pboxAdd.Image = global::Modelo.Properties.Resources.mas;
+            this.pboxAdd.Location = new System.Drawing.Point(68, 12);
+            this.pboxAdd.Name = "pboxAdd";
+            this.pboxAdd.Size = new System.Drawing.Size(50, 50);
+            this.pboxAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxAdd.TabIndex = 4;
+            this.pboxAdd.TabStop = false;
+            this.pboxAdd.Click += new System.EventHandler(this.pboxAdd_Click);
+            // 
+            // pboxNext
+            // 
+            this.pboxNext.Image = global::Modelo.Properties.Resources.proximo;
+            this.pboxNext.Location = new System.Drawing.Point(124, 12);
+            this.pboxNext.Name = "pboxNext";
+            this.pboxNext.Size = new System.Drawing.Size(50, 50);
+            this.pboxNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxNext.TabIndex = 3;
+            this.pboxNext.TabStop = false;
+            this.pboxNext.Click += new System.EventHandler(this.pboxNext_Click);
+            // 
+            // pboxPrevious
+            // 
+            this.pboxPrevious.Image = global::Modelo.Properties.Resources.anterior;
+            this.pboxPrevious.Location = new System.Drawing.Point(12, 12);
+            this.pboxPrevious.Name = "pboxPrevious";
+            this.pboxPrevious.Size = new System.Drawing.Size(50, 50);
+            this.pboxPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxPrevious.TabIndex = 2;
+            this.pboxPrevious.TabStop = false;
+            this.pboxPrevious.Click += new System.EventHandler(this.pboxPrevious_Click);
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(63, 65);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(55, 31);
+            this.lblTime.TabIndex = 5;
+            this.lblTime.Text = "0/0";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1081, 636);
-            this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.chart1);
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.ClientSize = new System.Drawing.Size(1101, 636);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pboxNext;
+        private System.Windows.Forms.PictureBox pboxPrevious;
+        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.PictureBox pboxAdd;
+        private System.Windows.Forms.Label lblTime;
     }
 }
 
