@@ -90,18 +90,18 @@ namespace Modelo
                     Name = "SM",
                     InteractiveStyles = new object[,]
                     {
-                        { "DM", 5.0 },
-                        { "AT", 5.0 },
-                        { "FT", 5.0 },
-                        { "AP", 5.0 },
-                        { "FC", 3.0 },
-                        { "TT", 2.0 },
-                        { "CY", 3.0 },
+                        { "DM", 2.0 },
+                        { "AT", 3.0 },
+                        { "FT", 3.0 },
+                        { "AP", 3.0 },
+                        { "FC", 5.0 },
+                        { "TT", 3.0 },
+                        { "CY", 2.0 },
                         { "TR", 2.0 },
-                        { "DS", 5.0 },
-                        { "RS", 5.0 },
-                        { "IM", 1.0 },
-                        { "CR", 5.0 },
+                        { "DS", 4.0 },
+                        { "RS", 4.0 },
+                        { "IM", 2.0 },
+                        { "CR", 3.0 },
                     }
                 },
                 new TSPiRole()
@@ -176,7 +176,7 @@ namespace Modelo
         private void Form1_Load(object sender, EventArgs e)
         {
             var points = new List<double[]>();
-            for(var index = 0; index<_tspiRoles.Count(); index++)
+            for (var index = 0; index < _tspiRoles.Count(); index++)
             {
                 if (true)
                 {
@@ -186,10 +186,18 @@ namespace Modelo
                     var random = new Random(seed);
                     var xValue = random.NextDouble() * (_xMax - 0) + 0;
                     var yValue = random.NextDouble() * (_yMax - 0) + 0;
-                    var newPoints = new [] {xValue, yValue};
+                    var newPoints = new[] { xValue, yValue };
                     points.Add(newPoints);
                 }
             }
+
+            //for (var i = 0; i < 7; i++)
+            //{
+            //    var xValue = i * .5 + 1; 
+            //    var yValue = 4 - i * .5;
+            //    var newPoints = new[] { xValue, yValue };
+            //    points.Add(newPoints);
+            //}
 
             _currentIndexHistory = 0;
             _pointsHistory.Add(points);
@@ -206,7 +214,7 @@ namespace Modelo
         private void UpdateChart()
         {
             chart1.Series.Clear();
-            for (var index = 0; index < _tspiRoles.Count(); index++)
+            for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var role = _tspiRoles.ElementAt(index);
                 var serie = new Series
@@ -222,21 +230,22 @@ namespace Modelo
         private void GetNextPoints()
         {
             var newPoints = new List<double[]>();
-            for (var index = 0; index < _tspiRoles.Count(); index++)
+            for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
-                var newPos = new[]{PosX(rol),PosY(rol)};
+                var newPos = new[]{PosX(rol), PosY(rol)};
                 newPoints.Add(newPos);
             }
             _pointsHistory.Add(newPoints);
             _currentIndexHistory = _pointsHistory.Count - 1;
             UpdatePoints();
+            UpdateChart();
         }
 
         private void UpdatePoints()
         {
             var points = _pointsHistory.ElementAt(_currentIndexHistory);
-            for (var index = 0; index < _tspiRoles.Count(); index++)
+            for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
                 rol.X = points.ElementAt(index)[0];
@@ -249,16 +258,20 @@ namespace Modelo
 
         private double PosX(TSPiRole rol)
         {
-            //¿El rol anterior del primer rol (TL) es el último?
-            var precendingRol = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
-            var posX = precendingRol.X;//Se obtiene la posicion en X del rol anterior
-            var posY = precendingRol.Y;//Se obtiene la posicion en Y del rol anterior
+            //¿El rol anterior del primer rol (TL) es el último? ¿O se refiere al "tiempo" o "iteración"?
+            /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
+            var posX = previusRole.X;//Se obtiene la posicion en X del rol anterior
+            var posY = previusRole.Y;//Se obtiene la posicion en Y del rol anterior*/
+            var posX = rol.X;
+            var posY = rol.Y;
+
             var step1 = 0.0; //Primer suumatoria de la ecuación
             var step2 = 0.0;//Segunda sumatoria de la ecuación
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var n = _tspiRoles[index];
-                if (n == precendingRol) continue;
+                //if (n == previusRole) continue;
+                if (n == rol) continue;
                 var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
                 //if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.X - posX) / d;
@@ -278,15 +291,19 @@ namespace Modelo
         private double PosY(TSPiRole rol)
         {
             //¿El rol anterior del primer rol (TL) es el último?
-            var precendingRol = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
-            var posX = precendingRol.X;//Se obtiene la posicion en X del rol anterior
-            var posY = precendingRol.Y;//Se obtiene la posicion en Y del rol anterior
-            var step1 = 0.0; //Primer sumatoria de la ecuación
+            /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
+            var posX = previusRole.X;//Se obtiene la posicion en X del rol anterior
+            var posY = previusRole.Y;//Se obtiene la posicion en Y del rol anterior*/
+            var posX = rol.X;
+            var posY = rol.Y;
+
+            var step1 = 0.0; //Primer suumatoria de la ecuación
             var step2 = 0.0;//Segunda sumatoria de la ecuación
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var n = _tspiRoles[index];
-                if (n == precendingRol) continue;
+                //if (n == previusRole) continue;
+                if (n == rol) continue;
                 var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
                 //if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.Y - posY) / d;
@@ -297,6 +314,7 @@ namespace Modelo
                 if (n == rol) continue;
                 step2 += (double)n.InteractiveStyles[0, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
             }
+
             var step3 = (double)rol.InteractiveStyles[0, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posY + step4;
@@ -305,6 +323,11 @@ namespace Modelo
 
         private void pboxAdd_Click(object sender, EventArgs e)
         {
+            if (_currentIndexHistory < _pointsHistory.Count - 1)
+            {
+                _currentIndexHistory = _pointsHistory.Count - 1;
+                UpdatePoints();
+            }
             GetNextPoints();
         }
 

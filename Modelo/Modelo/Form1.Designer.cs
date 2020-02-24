@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 2D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 2D);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.lblTime = new System.Windows.Forms.Label();
             this.pboxAdd = new System.Windows.Forms.PictureBox();
             this.pboxNext = new System.Windows.Forms.PictureBox();
             this.pboxPrevious = new System.Windows.Forms.PictureBox();
-            this.lblTime = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -61,6 +61,52 @@
             this.panel1.Size = new System.Drawing.Size(184, 636);
             this.panel1.TabIndex = 2;
             // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(63, 65);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(55, 31);
+            this.lblTime.TabIndex = 5;
+            this.lblTime.Text = "0/0";
+            // 
+            // pboxAdd
+            // 
+            this.pboxAdd.Image = global::Modelo.Properties.Resources.mas;
+            this.pboxAdd.Location = new System.Drawing.Point(68, 12);
+            this.pboxAdd.Name = "pboxAdd";
+            this.pboxAdd.Size = new System.Drawing.Size(50, 50);
+            this.pboxAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxAdd.TabIndex = 4;
+            this.pboxAdd.TabStop = false;
+            this.pboxAdd.Click += new System.EventHandler(this.pboxAdd_Click);
+            this.pboxAdd.DoubleClick += new System.EventHandler(this.pboxAdd_Click);
+            // 
+            // pboxNext
+            // 
+            this.pboxNext.Image = global::Modelo.Properties.Resources.proximo;
+            this.pboxNext.Location = new System.Drawing.Point(124, 12);
+            this.pboxNext.Name = "pboxNext";
+            this.pboxNext.Size = new System.Drawing.Size(50, 50);
+            this.pboxNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxNext.TabIndex = 3;
+            this.pboxNext.TabStop = false;
+            this.pboxNext.Click += new System.EventHandler(this.pboxNext_Click);
+            this.pboxNext.DoubleClick += new System.EventHandler(this.pboxNext_Click);
+            // 
+            // pboxPrevious
+            // 
+            this.pboxPrevious.Image = global::Modelo.Properties.Resources.anterior;
+            this.pboxPrevious.Location = new System.Drawing.Point(12, 12);
+            this.pboxPrevious.Name = "pboxPrevious";
+            this.pboxPrevious.Size = new System.Drawing.Size(50, 50);
+            this.pboxPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxPrevious.TabIndex = 2;
+            this.pboxPrevious.TabStop = false;
+            this.pboxPrevious.Click += new System.EventHandler(this.pboxPrevious_Click);
+            this.pboxPrevious.DoubleClick += new System.EventHandler(this.pboxPrevious_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.chart1);
@@ -73,114 +119,71 @@
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisX.Interval = 0.5D;
-            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea1.AxisX.LineColor = System.Drawing.Color.White;
-            chartArea1.AxisX.MajorGrid.Interval = 1D;
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisX.Maximum = 5D;
-            chartArea1.AxisX.Minimum = -2D;
-            chartArea1.AxisX.MinorGrid.Enabled = true;
-            chartArea1.AxisX.MinorGrid.Interval = 0.1D;
-            chartArea1.AxisX.MinorGrid.IntervalOffset = double.NaN;
-            chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
-            chartArea1.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
-            chartArea1.AxisX2.Interval = 1D;
-            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisY.Interval = 0.5D;
-            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea1.AxisY.LineColor = System.Drawing.Color.White;
-            chartArea1.AxisY.MajorGrid.Interval = 1D;
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisY.Maximum = 5D;
-            chartArea1.AxisY.Minimum = -2D;
-            chartArea1.AxisY.MinorGrid.Enabled = true;
-            chartArea1.AxisY.MinorGrid.Interval = 0.1D;
-            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
-            chartArea1.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
-            chartArea1.BackColor = System.Drawing.Color.DimGray;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea5.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea5.AxisX.Interval = 0.5D;
+            chartArea5.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea5.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea5.AxisX.MajorGrid.Interval = 1D;
+            chartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisX.Maximum = 5D;
+            chartArea5.AxisX.Minimum = -2D;
+            chartArea5.AxisX.MinorGrid.Enabled = true;
+            chartArea5.AxisX.MinorGrid.Interval = 0.1D;
+            chartArea5.AxisX.MinorGrid.IntervalOffset = double.NaN;
+            chartArea5.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea5.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea5.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea5.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
+            chartArea5.AxisX2.Interval = 1D;
+            chartArea5.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea5.AxisY.Interval = 0.5D;
+            chartArea5.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea5.AxisY.LineColor = System.Drawing.Color.White;
+            chartArea5.AxisY.MajorGrid.Interval = 1D;
+            chartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisY.Maximum = 5D;
+            chartArea5.AxisY.Minimum = -2D;
+            chartArea5.AxisY.MinorGrid.Enabled = true;
+            chartArea5.AxisY.MinorGrid.Interval = 0.1D;
+            chartArea5.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea5.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea5.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea5.BackColor = System.Drawing.Color.DimGray;
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.BackColor = System.Drawing.Color.Gray;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend5.BackColor = System.Drawing.Color.Gray;
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.LabelAngle = 90;
-            series1.LabelBackColor = System.Drawing.Color.DimGray;
-            series1.LabelForeColor = System.Drawing.Color.White;
-            series1.Legend = "Legend1";
-            series1.Name = "Serie";
-            series1.Points.Add(dataPoint1);
-            series1.XValueMember = "10";
-            series1.YValueMembers = "10";
-            series1.YValuesPerPoint = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            series2.Points.Add(dataPoint2);
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series9.BorderWidth = 2;
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series9.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series9.LabelAngle = 90;
+            series9.LabelBackColor = System.Drawing.Color.DimGray;
+            series9.LabelForeColor = System.Drawing.Color.White;
+            series9.Legend = "Legend1";
+            series9.Name = "Serie";
+            series9.Points.Add(dataPoint9);
+            series9.XValueMember = "10";
+            series9.YValueMembers = "10";
+            series9.YValuesPerPoint = 2;
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series10.Legend = "Legend1";
+            series10.Name = "Series2";
+            series10.Points.Add(dataPoint10);
+            this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
             this.chart1.Size = new System.Drawing.Size(917, 636);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
-            // 
-            // pboxAdd
-            // 
-            this.pboxAdd.Image = global::Modelo.Properties.Resources.mas;
-            this.pboxAdd.Location = new System.Drawing.Point(68, 12);
-            this.pboxAdd.Name = "pboxAdd";
-            this.pboxAdd.Size = new System.Drawing.Size(50, 50);
-            this.pboxAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxAdd.TabIndex = 4;
-            this.pboxAdd.TabStop = false;
-            this.pboxAdd.Click += new System.EventHandler(this.pboxAdd_Click);
-            // 
-            // pboxNext
-            // 
-            this.pboxNext.Image = global::Modelo.Properties.Resources.proximo;
-            this.pboxNext.Location = new System.Drawing.Point(124, 12);
-            this.pboxNext.Name = "pboxNext";
-            this.pboxNext.Size = new System.Drawing.Size(50, 50);
-            this.pboxNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxNext.TabIndex = 3;
-            this.pboxNext.TabStop = false;
-            this.pboxNext.Click += new System.EventHandler(this.pboxNext_Click);
-            // 
-            // pboxPrevious
-            // 
-            this.pboxPrevious.Image = global::Modelo.Properties.Resources.anterior;
-            this.pboxPrevious.Location = new System.Drawing.Point(12, 12);
-            this.pboxPrevious.Name = "pboxPrevious";
-            this.pboxPrevious.Size = new System.Drawing.Size(50, 50);
-            this.pboxPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxPrevious.TabIndex = 2;
-            this.pboxPrevious.TabStop = false;
-            this.pboxPrevious.Click += new System.EventHandler(this.pboxPrevious_Click);
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(63, 65);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(55, 31);
-            this.lblTime.TabIndex = 5;
-            this.lblTime.Text = "0/0";
             // 
             // Form1
             // 
@@ -195,11 +198,11 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).EndInit();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
