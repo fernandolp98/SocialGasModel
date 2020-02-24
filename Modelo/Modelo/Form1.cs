@@ -14,7 +14,7 @@ namespace Modelo
 
         private readonly double _xMax;
         private readonly double _yMax;
-        //private readonly double _ratio;
+        private readonly double _ratio;
 
         private List<List<double[]>> _pointsHistory;
         private int _currentIndexHistory;
@@ -167,7 +167,7 @@ namespace Modelo
             };
 
             _gamma = 0.01;
-            //_ratio = 0;
+            _ratio = 2;
             _xMax = 4;
             _yMax = 4;
             _pointsHistory = new List<List<double[]>>();
@@ -228,10 +228,12 @@ namespace Modelo
         private void GetNextPoints()
         {
             var newPoints = new List<double[]>();
+            var rand = new Random();
+            var a = rand.Next(0, 11);
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
-                var newPos = new[]{PosX(rol), PosY(rol)};
+                var newPos = new[]{PosX(rol, a), PosY(rol, a)};
                 newPoints.Add(newPos);
             }
             _pointsHistory.Add(newPoints);
@@ -254,7 +256,7 @@ namespace Modelo
             lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count}";
         }
 
-        private double PosX(TSPiRole rol)
+        private double PosX(TSPiRole rol, int a)
         {
             //¿El rol anterior del primer rol (TL) es el último? ¿O se refiere al "tiempo" o "iteración"?
             /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
@@ -271,22 +273,22 @@ namespace Modelo
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
                 var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
-                //if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
+                if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.X - posX) / d;
             }
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var n = _tspiRoles[index];
                 if (n == rol) continue;
-                step2 += (double)n.InteractiveStyles[0, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+                step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
             }
 
-            var step3 = (double)rol.InteractiveStyles[0, 1] * step2;
+            var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posX + step4;
             return result;
         }
-        private double PosY(TSPiRole rol)
+        private double PosY(TSPiRole rol, int a)
         {
             //¿El rol anterior del primer rol (TL) es el último? ¿O se refiere al "tiempo" o "iteración"?
             /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
@@ -303,17 +305,17 @@ namespace Modelo
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
                 var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
-                //if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
+                if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.Y - posY) / d;
             }
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var n = _tspiRoles[index];
                 if (n == rol) continue;
-                step2 += (double)n.InteractiveStyles[0, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+                step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
             }
 
-            var step3 = (double)rol.InteractiveStyles[0, 1] * step2;
+            var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posY + step4;
             return result;
