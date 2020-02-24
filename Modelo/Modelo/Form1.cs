@@ -146,7 +146,7 @@ namespace Modelo
                 },
                 new TSPiRole()
                 {
-                    Index = 7,
+                    Index = 6,
                     Name = "TM",
                     InteractiveStyles = new object[,]
                     {
@@ -290,7 +290,7 @@ namespace Modelo
         }
         private double PosY(TSPiRole rol)
         {
-            //¿El rol anterior del primer rol (TL) es el último?
+            //¿El rol anterior del primer rol (TL) es el último? ¿O se refiere al "tiempo" o "iteración"?
             /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
             var posX = previusRole.X;//Se obtiene la posicion en X del rol anterior
             var posY = previusRole.Y;//Se obtiene la posicion en Y del rol anterior*/
