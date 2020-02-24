@@ -178,17 +178,15 @@ namespace Modelo
             var points = new List<double[]>();
             for (var index = 0; index < _tspiRoles.Count(); index++)
             {
-                if (true)
-                {
-                    var guid = Guid.NewGuid();
-                    var justNumbers = new string(guid.ToString().Where(Char.IsDigit).ToArray());
-                    var seed = int.Parse(justNumbers.Substring(0, 4));
-                    var random = new Random(seed);
-                    var xValue = random.NextDouble() * (_xMax - 0) + 0;
-                    var yValue = random.NextDouble() * (_yMax - 0) + 0;
-                    var newPoints = new[] { xValue, yValue };
-                    points.Add(newPoints);
-                }
+                var guid = Guid.NewGuid();
+                var justNumbers = new string(guid.ToString().Where(Char.IsDigit).ToArray());
+                var seed = int.Parse(justNumbers.Substring(0, 4));
+                var random = new Random(seed);
+
+                var xValue = random.NextDouble() * (_xMax - 0) + 0;
+                var yValue = random.NextDouble() * (_yMax - 0) + 0;
+                var newPoints = new[] { xValue, yValue };
+                points.Add(newPoints);
             }
 
             //for (var i = 0; i < 7; i++)
@@ -219,8 +217,8 @@ namespace Modelo
                 var role = _tspiRoles.ElementAt(index);
                 var serie = new Series
                 {
-                    Name = role.Name,
-                    ChartType = SeriesChartType.Point,
+                    Name = $"{role.Name} ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
+                    ChartType = SeriesChartType.Point
                 };
                 serie.Points.AddXY(role.X, role.Y);
                 chart1.Series.Add(serie);
