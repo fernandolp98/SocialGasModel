@@ -41,6 +41,7 @@
             this.pboxPrevious = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).BeginInit();
@@ -51,6 +52,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.lblTime);
             this.panel1.Controls.Add(this.pboxAdd);
             this.panel1.Controls.Add(this.pboxNext);
@@ -126,8 +128,8 @@
             chartArea1.AxisX.MajorGrid.Interval = 1D;
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisX.Maximum = 5D;
-            chartArea1.AxisX.Minimum = -2D;
+            chartArea1.AxisX.Maximum = 4D;
+            chartArea1.AxisX.Minimum = 0D;
             chartArea1.AxisX.MinorGrid.Enabled = true;
             chartArea1.AxisX.MinorGrid.Interval = 0.1D;
             chartArea1.AxisX.MinorGrid.IntervalOffset = double.NaN;
@@ -144,8 +146,8 @@
             chartArea1.AxisY.MajorGrid.Interval = 1D;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisY.Maximum = 5D;
-            chartArea1.AxisY.Minimum = -2D;
+            chartArea1.AxisY.Maximum = 4D;
+            chartArea1.AxisY.Minimum = 0D;
             chartArea1.AxisY.MinorGrid.Enabled = true;
             chartArea1.AxisY.MinorGrid.Interval = 0.1D;
             chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
@@ -186,6 +188,16 @@
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(37, 169);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -216,6 +228,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.PictureBox pboxAdd;
         private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Button button1;
     }
 }
 

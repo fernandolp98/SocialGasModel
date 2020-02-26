@@ -22,6 +22,11 @@ namespace Modelo
         public Form1()
         {
             InitializeComponent();
+            _gamma = 0.01;
+            _ratio = 2;
+            _xMax = 4;
+            _yMax = 4;
+            _pointsHistory = new List<List<double[]>>();
             _tspiRoles = new List<TSPiRole>
             {
                 new TSPiRole()
@@ -166,11 +171,7 @@ namespace Modelo
                 }
             };
 
-            _gamma = 0.01;
-            _ratio = 2;
-            _xMax = 4;
-            _yMax = 4;
-            _pointsHistory = new List<List<double[]>>();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -204,7 +205,7 @@ namespace Modelo
 
         private void PrintPoints(TSPiRole role)
         {
-            if(role.Index == 0)
+            if (role.Index == 0)
                 Console.WriteLine(@"------------------------------------------------");
             Console.WriteLine($@"{role.Name} -> X: {role.X}, Y: {role.Y}");
         }
@@ -233,7 +234,7 @@ namespace Modelo
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
-                var newPos = new[]{PosX(rol, a), PosY(rol, a)};
+                var newPos = new[] { PosX(rol, a), PosY(rol, a) };
                 newPoints.Add(newPos);
             }
             _pointsHistory.Add(newPoints);
@@ -272,7 +273,7 @@ namespace Modelo
                 var n = _tspiRoles[index];
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
-                var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
+                var d = Distance(rol, n);
                 if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.X - posX) / d;
             }
@@ -286,7 +287,13 @@ namespace Modelo
             var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posX + step4;
+
+            if(result > _xMax || result < 0)
+            {
+                result -= (_xMax * (result / _xMax));
+            }
             return result;
+
         }
         private double PosY(TSPiRole rol, int a)
         {
@@ -304,7 +311,7 @@ namespace Modelo
                 var n = _tspiRoles[index];
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
-                var d = Math.Sqrt(Math.Pow(n.X - posX, 2) + Math.Pow(n.Y - posY, 2));
+                var d = Distance(rol, n);
                 if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.Y - posY) / d;
             }
@@ -318,9 +325,44 @@ namespace Modelo
             var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posY + step4;
+
+            if (result > _yMax || result < 0)
+            {
+                result -= (_yMax * (result / _yMax));
+            }
             return result;
         }
+        private double Distance(TSPiRole role1, TSPiRole role2)
+        {
+            var distances = new List<double>();
+            var x1 = role1.X;
+            var y1 = role1.Y;
+            var x2 = role2.X;
+            var y2 = role2.Y;
+            var nx1 = role1.X + _xMax;
+            var nx2 = role1.X - _xMax;
+            var ny1 = role1.Y + _yMax;
+            var ny2 = role1.Y - _yMax;
+            distances.Add(Distance(x1, y1, x2, y2));
+            distances.Add(Distance(nx1, y1, x2, y2));
+            distances.Add(Distance(nx2, y1, x2, y2));
+            distances.Add(Distance(x1, ny1, x2, y2));
+            distances.Add(Distance(x1, ny2, x2, y2));
+            distances.Add(Distance(nx1, ny1, x2, y2));
+            distances.Add(Distance(nx2, ny2, x2, y2));
+            distances.Add(Distance(nx1, ny2, x2, y2));
+            distances.Add(Distance(nx2, ny1, x2, y2));
 
+            distances.Sort();
+
+            return distances.ElementAt(0);
+        }
+        private double Distance(double x1, double y1, double x2, double y2)
+        {
+            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
+        }
+
+        #region MyRegion
         private void pboxAdd_Click(object sender, EventArgs e)
         {
             if (_currentIndexHistory < _pointsHistory.Count - 1)
@@ -343,6 +385,23 @@ namespace Modelo
             if (_currentIndexHistory < _pointsHistory.Count - 1)
                 _currentIndexHistory++;
             UpdatePoints();
+        }
+        #endregion
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var r1 = new TSPiRole()
+            {
+                X = 2,
+                Y = .5
+            };
+            var r2 = new TSPiRole()
+            {
+                X = 2,
+                Y = 1.5
+            };
+            Console.WriteLine(Distance(2, .5, 2, 1.5));
+            Console.WriteLine(Distance(r1, r2));
         }
     }
 }

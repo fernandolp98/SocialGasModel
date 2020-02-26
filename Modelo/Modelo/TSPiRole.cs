@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modelo
 {
-    class TSPiRole
+    public class TSPiRole
     {
         public string Name { get; set; }
         public object[,] InteractiveStyles { get; set; }
@@ -14,8 +14,6 @@ namespace Modelo
         public int Index { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-
-
         public TSPiRole()
         {
         }
