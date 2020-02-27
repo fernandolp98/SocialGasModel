@@ -15,6 +15,9 @@ namespace Modelo
         private readonly double _xMax;
         private readonly double _yMax;
         private readonly double _ratio;
+        private readonly double _epsilon;
+        private readonly double _r;
+
 
         private List<List<double[]>> _pointsHistory;
         private int _currentIndexHistory;
@@ -23,6 +26,8 @@ namespace Modelo
         {
             InitializeComponent();
             _gamma = 0.001;
+            _epsilon = 0.1;
+            _r = 3;
             _ratio = 2;
             _xMax = 4;
             _yMax = 4;
@@ -234,29 +239,47 @@ namespace Modelo
             }
 
         }
-        private void GetNewXValue()
+        private void GetNewXValues()
         {
             var newXValues = new List<double[]>();
-            var rand = new Random();
-            //var a = rand.Next(0, 11);
-            var a = 7;
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
-                var rol = _tspiRoles.ElementAt(index);
-                for(var index2 = 0; index2 < rol.InteractiveStyles.Length; index2++)
-                {
-
-                }
-                var newPos = new[] { PosX(rol, a), PosY(rol, a) };
-                newXValues.Add(newPos);
+                newXValues.Add(GetNewXValue(_tspiRoles[index]));
             }
+            Console.WriteLine("Hola :)");
+        }
+        private double[] GetNewXValue(TSPiRole role)
+        {
+            var newX = new double[12];
+            var step1 = 0.0;
+            for (var index = 0; index < role.InteractiveStyles.Length / 2; index++)
+            {
+                var n = 0;
+                for (var index2 = 0; index2 < _tspiRoles.Count; index2++)
+                {
+                    var nj = _tspiRoles[index2];
+                    if (role == nj) continue;
+                    if (Distance(role, nj) > _ratio) continue;
+                    step1 += F((double)nj.InteractiveStyles[index,1]);
+                    n++;
+                }
+                var step2 = (_epsilon / n) * step1;
+                var x = (double)role.InteractiveStyles[index, 1];
+                var step3 = (1 - _epsilon) * F(x);
+                newX[index] = step3 + step2;
+            }
+            return newX;
+        }
+        private double F(double x)
+        {
+            return _r * x * (1 - x) * 5;
         }
         private void GetNextPoints()
         {
             var newPoints = new List<double[]>();
             var rand = new Random();
-            //var a = rand.Next(0, 11);
-            var a = 7;
+            var a = rand.Next(0, 11);
+            //var a = 7;
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
@@ -452,9 +475,10 @@ namespace Modelo
 
         private void pboxPlay_Click(object sender, EventArgs e)
         {
-            var delegado = new ThreadStart(Run);
+            /*var delegado = new ThreadStart(Run);
             var hilo = new Thread(delegado);
-            hilo.Start();
+            hilo.Start();*/
+            GetNewXValues();
         }
         private void Run()
         {
