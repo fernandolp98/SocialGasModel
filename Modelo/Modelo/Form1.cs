@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -10,7 +11,6 @@ namespace Modelo
     {
         private readonly List<TSPiRole> _tspiRoles;
         private readonly double _gamma;
-        //private double _ratio;
 
         private readonly double _xMax;
         private readonly double _yMax;
@@ -22,7 +22,7 @@ namespace Modelo
         public Form1()
         {
             InitializeComponent();
-            _gamma = 0.01;
+            _gamma = 0.001;
             _ratio = 2;
             _xMax = 4;
             _yMax = 4;
@@ -212,6 +212,14 @@ namespace Modelo
 
         private void UpdateChart()
         {
+            //if(chart1.InvokeRequired)
+            //{
+            //    chart1.Invoke(new MethodInvoker(delegate
+            //    {
+            //        button1.Enabled = true;
+            //        button2.Enabled = false;
+            //    }));
+            //}
             chart1.Series.Clear();
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
@@ -224,13 +232,31 @@ namespace Modelo
                 serie.Points.AddXY(role.X, role.Y);
                 chart1.Series.Add(serie);
             }
-        }
 
+        }
+        private void GetNewXValue()
+        {
+            var newXValues = new List<double[]>();
+            var rand = new Random();
+            //var a = rand.Next(0, 11);
+            var a = 7;
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var rol = _tspiRoles.ElementAt(index);
+                for(var index2 = 0; index2 < rol.InteractiveStyles.Length; index2++)
+                {
+
+                }
+                var newPos = new[] { PosX(rol, a), PosY(rol, a) };
+                newXValues.Add(newPos);
+            }
+        }
         private void GetNextPoints()
         {
             var newPoints = new List<double[]>();
             var rand = new Random();
-            var a = rand.Next(0, 11);
+            //var a = rand.Next(0, 11);
+            var a = 7;
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var rol = _tspiRoles.ElementAt(index);
@@ -242,7 +268,10 @@ namespace Modelo
             UpdatePoints();
             UpdateChart();
         }
+        private void UpdateX()
+        {
 
+        }
         private void UpdatePoints()
         {
             var points = _pointsHistory.ElementAt(_currentIndexHistory);
@@ -274,23 +303,28 @@ namespace Modelo
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
                 var d = Distance(rol, n);
-                if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
+                if (d > _ratio) continue;
                 step1 += (n.X - posX) / d;
-            }
-            for (var index = 0; index < _tspiRoles.Count; index++)
-            {
-                var n = _tspiRoles[index];
-                if (n == rol) continue;
                 step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+
             }
+            //for (var index = 0; index < _tspiRoles.Count; index++) //Hace la sumatoria del paso 2 sólo de los vecinos
+            //{
+            //    var n = _tspiRoles[index];
+            //    if (n == rol) continue;
+            //    step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+            //}
 
             var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posX + step4;
 
-            if(result > _xMax || result < 0)
+            if (result > _xMax)
+                result %= _xMax;
+            if (result < 0)
             {
-                result -= (_xMax * (result / _xMax));
+                result %= _xMax;
+                result += _xMax;
             }
             return result;
 
@@ -314,21 +348,26 @@ namespace Modelo
                 var d = Distance(rol, n);
                 if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
                 step1 += (n.Y - posY) / d;
-            }
-            for (var index = 0; index < _tspiRoles.Count; index++)
-            {
-                var n = _tspiRoles[index];
-                if (n == rol) continue;
                 step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+
             }
+            //for (var index = 0; index < _tspiRoles.Count; index++)
+            //{
+            //    var n = _tspiRoles[index];
+            //    if (n == rol) continue;
+            //    step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
+            //}
 
             var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
             var step4 = _gamma * step1 * step3;
             var result = posY + step4;
 
-            if (result > _yMax || result < 0)
+            if (result > _yMax)
+                result %= _yMax;
+            if (result < 0)
             {
-                result -= (_yMax * (result / _yMax));
+                result %= _yMax;
+                result += _yMax;
             }
             return result;
         }
@@ -368,6 +407,7 @@ namespace Modelo
             if (_currentIndexHistory < _pointsHistory.Count - 1)
             {
                 _currentIndexHistory = _pointsHistory.Count - 1;
+                UpdateX();
                 UpdatePoints();
             }
             GetNextPoints();
@@ -390,18 +430,48 @@ namespace Modelo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var r1 = new TSPiRole()
+            //var r1 = new TSPiRole()
+            //{
+            //    X = 2,
+            //    Y = .5
+            //};
+            //var r2 = new TSPiRole()
+            //{
+            //    X = 2,
+            //    Y = 1.5
+            //};
+            //Console.WriteLine(Distance(2, .5, 2, 1.5));
+            //Console.WriteLine(Distance(r1, r2));
+
+            var n = -47;
+            n %= 4;
+            n += 4;
+            //n += 4;
+            Console.WriteLine(n);
+        }
+
+        private void pboxPlay_Click(object sender, EventArgs e)
+        {
+            var delegado = new ThreadStart(Run);
+            var hilo = new Thread(delegado);
+            hilo.Start();
+        }
+        private void Run()
+        {
+            var isNumber = int.TryParse(txbIterations.Text, out var iterations);
+            if (isNumber)
             {
-                X = 2,
-                Y = .5
-            };
-            var r2 = new TSPiRole()
-            {
-                X = 2,
-                Y = 1.5
-            };
-            Console.WriteLine(Distance(2, .5, 2, 1.5));
-            Console.WriteLine(Distance(r1, r2));
+                for (int index = 0; index < iterations; index++)
+                {
+                    if (_currentIndexHistory < _pointsHistory.Count - 1)
+                    {
+                        _currentIndexHistory = _pointsHistory.Count - 1;
+                        UpdatePoints();
+                    }
+                    GetNextPoints();
+                    Thread.Sleep(1000);
+                }
+            }
         }
     }
 }
