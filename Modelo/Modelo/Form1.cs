@@ -246,7 +246,7 @@ namespace Modelo
             {
                 newXValues.Add(GetNewXValue(_tspiRoles[index]));
             }
-            Console.WriteLine("Hola :)");
+            UpdateX(newXValues);
         }
         private double[] GetNewXValue(TSPiRole role)
         {
@@ -259,20 +259,31 @@ namespace Modelo
                 {
                     var nj = _tspiRoles[index2];
                     if (role == nj) continue;
-                    if (Distance(role, nj) > _ratio) continue;
+                    if (Distance(role, nj)[0] > _ratio) continue;
                     step1 += F((double)nj.InteractiveStyles[index,1]);
                     n++;
                 }
-                var step2 = (_epsilon / n) * step1;
-                var x = (double)role.InteractiveStyles[index, 1];
-                var step3 = (1 - _epsilon) * F(x);
-                newX[index] = step3 + step2;
+                if(n > 0)
+                {
+                    var step2 = (_epsilon / n) * step1;
+                    var x = (double)role.InteractiveStyles[index, 1];
+                    var step3 = (1 - _epsilon) * F(x);
+                    newX[index] = step3 + step2;
+                }
+                else
+                {
+                    var step2 =  step1;
+                    var x = (double)role.InteractiveStyles[index, 1];
+                    var step3 =  F(x);
+                    newX[index] = step3 + step2;
+                }
+
             }
             return newX;
         }
         private double F(double x)
         {
-            return _r * x * (1 - x) * 5;
+            return _r * x * (1 - x) + 5;
         }
         private void GetNextPoints()
         {
@@ -291,9 +302,16 @@ namespace Modelo
             UpdatePoints();
             UpdateChart();
         }
-        private void UpdateX()
+        private void UpdateX(List<double[]> newValues)
         {
-
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var role = _tspiRoles[index];
+                for(var index2 = 0; index2 < 12; index2++)
+                {
+                    role.InteractiveStyles[index2, 1] = newValues[index][index2];
+                }
+            }
         }
         private void UpdatePoints()
         {
@@ -326,8 +344,15 @@ namespace Modelo
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
                 var d = Distance(rol, n);
-                if (d > _ratio) continue;
-                step1 += (n.X - posX) / d;
+                if (d[0] > _ratio) continue;
+                if(d[0] == 0)
+                {
+                    step1 += (d[1] - posX);
+                }
+                else
+                {
+                    step1 += (d[1] - posX) / d[0];
+                }
                 step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
 
             }
@@ -349,6 +374,7 @@ namespace Modelo
                 result %= _xMax;
                 result += _xMax;
             }
+    
             return result;
 
         }
@@ -369,8 +395,15 @@ namespace Modelo
                 //if (n == previusRole) continue;
                 if (n == rol) continue;
                 var d = Distance(rol, n);
-                if (d > _ratio) continue; //Por el momento, todos son vecinos :) 
-                step1 += (n.Y - posY) / d;
+                if (d[0] > _ratio) continue; //Por el momento, todos son vecinos :) 
+                if (d[0] == 0)
+                {
+                    step1 += (d[2] - posY);
+                }
+                else
+                {
+                    step1 += (d[2] - posY) / d[0];
+                }
                 step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
 
             }
@@ -394,9 +427,9 @@ namespace Modelo
             }
             return result;
         }
-        private double Distance(TSPiRole role1, TSPiRole role2)
+        private double[] Distance(TSPiRole role1, TSPiRole role2)
         {
-            var distances = new List<double>();
+            var distances = new List<double[]>();
             var x1 = role1.X;
             var y1 = role1.Y;
             var x2 = role2.X;
@@ -405,17 +438,17 @@ namespace Modelo
             var nx2 = role1.X - _xMax;
             var ny1 = role1.Y + _yMax;
             var ny2 = role1.Y - _yMax;
-            distances.Add(Distance(x1, y1, x2, y2));
-            distances.Add(Distance(nx1, y1, x2, y2));
-            distances.Add(Distance(nx2, y1, x2, y2));
-            distances.Add(Distance(x1, ny1, x2, y2));
-            distances.Add(Distance(x1, ny2, x2, y2));
-            distances.Add(Distance(nx1, ny1, x2, y2));
-            distances.Add(Distance(nx2, ny2, x2, y2));
-            distances.Add(Distance(nx1, ny2, x2, y2));
-            distances.Add(Distance(nx2, ny1, x2, y2));
+            distances.Add(new double[] {Distance(x1, y1, x2, y2), 0, 0});
+            distances.Add(new double[] {Distance(nx1, y1, x2, y2)});
+            distances.Add(new double[] {Distance(nx2, y1, x2, y2)});
+            distances.Add(new double[] {Distance(x1, ny1, x2, y2)});
+            distances.Add(new double[] {Distance(x1, ny2, x2, y2)});
+            distances.Add(new double[] {Distance(nx1, ny1, x2, y2)});
+            distances.Add(new double[] {Distance(nx2, ny2, x2, y2)});
+            distances.Add(new double[] {Distance(nx1, ny2, x2, y2)});
+            distances.Add(new double[] {Distance(nx2, ny1, x2, y2)});
 
-            distances.Sort();
+            distances.Sort(); //falta ordenar
 
             return distances.ElementAt(0);
         }
@@ -430,9 +463,14 @@ namespace Modelo
             if (_currentIndexHistory < _pointsHistory.Count - 1)
             {
                 _currentIndexHistory = _pointsHistory.Count - 1;
-                UpdateX();
+                //UpdateX();
                 UpdatePoints();
             }
+            if(_currentIndexHistory == 4)
+            {
+                Console.WriteLine("zdxz");
+            }
+            GetNewXValues();
             GetNextPoints();
         }
 
