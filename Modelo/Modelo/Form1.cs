@@ -25,9 +25,9 @@ namespace Modelo
         public Form1()
         {
             InitializeComponent();
-            _gamma = 0.001;
-            _epsilon = 0.1;
-            _r = 3;
+            _gamma = 0.03;
+            _epsilon = 0.05;
+            _r = 2.5;
             _ratio = 2;
             _xMax = 4;
             _yMax = 4;
@@ -175,8 +175,14 @@ namespace Modelo
                     }
                 }
             };
-
-
+            for (var index = 0; index < 7; index++)
+            {
+                var role = _tspiRoles.ElementAt(index);
+                for (var index2 = 0; index2 < 12; index2++)
+                {
+                    role.InteractiveStyles[index2, 1] = (double)role.InteractiveStyles[index2, 1] / 5;
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -263,7 +269,7 @@ namespace Modelo
                     step1 += F((double)nj.InteractiveStyles[index,1]);
                     n++;
                 }
-                if(n > 0)
+                if(n != 0)
                 {
                     var step2 = (_epsilon / n) * step1;
                     var x = (double)role.InteractiveStyles[index, 1];
@@ -281,9 +287,10 @@ namespace Modelo
             }
             return newX;
         }
-        private double F(double x)
+        private double F(double x) //F da numeros negativos 
         {
-            return _r * x * (1 - x) + 5;
+            var f = _r * (x) * (1 - (x));
+            return f;
         }
         private void GetNextPoints()
         {
@@ -329,12 +336,11 @@ namespace Modelo
 
         private double PosX(TSPiRole rol, int a)
         {
-            //¿El rol anterior del primer rol (TL) es el último? ¿O se refiere al "tiempo" o "iteración"?
-            /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
-            var posX = previusRole.X;//Se obtiene la posicion en X del rol anterior
-            var posY = previusRole.Y;//Se obtiene la posicion en Y del rol anterior*/
+            if(_currentIndexHistory == 7)
+            {
+                Console.WriteLine();
+            }
             var posX = rol.X;
-            var posY = rol.Y;
 
             var step1 = 0.0; //Primer suumatoria de la ecuación
             var step2 = 0.0;//Segunda sumatoria de la ecuación
@@ -342,19 +348,26 @@ namespace Modelo
             {
                 var n = _tspiRoles[index];
                 //if (n == previusRole) continue;
-                if (n == rol) continue;
-                var d = Distance(rol, n);
-                if (d[0] > _ratio) continue;
-                if(d[0] == 0)
+                if (n == rol)
                 {
-                    step1 += (d[1] - posX);
+                    continue;
+                } 
+                var d = Distance(rol, n);
+                posX = d[1];
+                var m = d[0];
+                if (m > _ratio)
+                {
+                    continue;
+                }
+                if (m == 0)
+                {
+                    step1 += (n.X - posX);
                 }
                 else
                 {
-                    step1 += (d[1] - posX) / d[0];
+                    step1 += (n.X - posX) / m;
                 }
-                step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
-
+                step2 += (double)n.InteractiveStyles[a, 1];
             }
             //for (var index = 0; index < _tspiRoles.Count; index++) //Hace la sumatoria del paso 2 sólo de los vecinos
             //{
@@ -363,7 +376,7 @@ namespace Modelo
             //    step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
             //}
 
-            var step3 = (double)rol.InteractiveStyles[a, 1] * step2;
+            var step3 = (double)rol.InteractiveStyles[a, 1] * step2; //Se vuelve infinito
             var step4 = _gamma * step1 * step3;
             var result = posX + step4;
 
@@ -374,7 +387,6 @@ namespace Modelo
                 result %= _xMax;
                 result += _xMax;
             }
-    
             return result;
 
         }
@@ -384,7 +396,6 @@ namespace Modelo
             /*var previusRole = rol.Index == 0 ? _tspiRoles.ElementAt(_tspiRoles.Count - 1) : _tspiRoles.ElementAt(rol.Index - 1);//Se obtiene el rol anterior
             var posX = previusRole.X;//Se obtiene la posicion en X del rol anterior
             var posY = previusRole.Y;//Se obtiene la posicion en Y del rol anterior*/
-            var posX = rol.X;
             var posY = rol.Y;
 
             var step1 = 0.0; //Primer suumatoria de la ecuación
@@ -393,19 +404,26 @@ namespace Modelo
             {
                 var n = _tspiRoles[index];
                 //if (n == previusRole) continue;
-                if (n == rol) continue;
-                var d = Distance(rol, n);
-                if (d[0] > _ratio) continue; //Por el momento, todos son vecinos :) 
-                if (d[0] == 0)
+                if (n == rol)
                 {
-                    step1 += (d[2] - posY);
+                    continue;
+                }
+                var d = Distance(rol, n);
+                posY = d[2];
+                var m = d[0];
+                if (m > _ratio)
+                {
+                    continue;
+                }
+                if (m == 0)
+                {
+                    step1 += (n.X - posY);
                 }
                 else
                 {
-                    step1 += (d[2] - posY) / d[0];
+                    step1 += (n.X - posY) / m;
                 }
-                step2 += (double)n.InteractiveStyles[a, 1]; //Para el paso 3, ¿sólo hace la sumatoria de las X de los vecinos o de todos?
-
+                step2 += (double)n.InteractiveStyles[a, 1];
             }
             //for (var index = 0; index < _tspiRoles.Count; index++)
             //{
@@ -430,6 +448,7 @@ namespace Modelo
         private double[] Distance(TSPiRole role1, TSPiRole role2)
         {
             var distances = new List<double[]>();
+
             var x1 = role1.X;
             var y1 = role1.Y;
             var x2 = role2.X;
@@ -438,17 +457,18 @@ namespace Modelo
             var nx2 = role1.X - _xMax;
             var ny1 = role1.Y + _yMax;
             var ny2 = role1.Y - _yMax;
-            distances.Add(new double[] {Distance(x1, y1, x2, y2), 0, 0});
-            distances.Add(new double[] {Distance(nx1, y1, x2, y2)});
-            distances.Add(new double[] {Distance(nx2, y1, x2, y2)});
-            distances.Add(new double[] {Distance(x1, ny1, x2, y2)});
-            distances.Add(new double[] {Distance(x1, ny2, x2, y2)});
-            distances.Add(new double[] {Distance(nx1, ny1, x2, y2)});
-            distances.Add(new double[] {Distance(nx2, ny2, x2, y2)});
-            distances.Add(new double[] {Distance(nx1, ny2, x2, y2)});
-            distances.Add(new double[] {Distance(nx2, ny1, x2, y2)});
+            distances.Add(new double[] {Distance(x1, y1, x2, y2), x1, y1});
+            distances.Add(new double[] {Distance(nx1, y1, x2, y2), nx1, y1});
+            distances.Add(new double[] {Distance(nx2, y1, x2, y2), nx2, y1});
+            distances.Add(new double[] {Distance(x1, ny1, x2, y2), x1, ny1});
+            distances.Add(new double[] {Distance(x1, ny2, x2, y2), x1, ny2});
+            distances.Add(new double[] {Distance(nx1, ny1, x2, y2), nx1, ny1});
+            distances.Add(new double[] {Distance(nx2, ny2, x2, y2), nx2, ny2});
+            distances.Add(new double[] {Distance(nx1, ny2, x2, y2), nx1, ny2});
+            distances.Add(new double[] {Distance(nx2, ny1, x2, y2), nx2, ny1});
 
-            distances.Sort(); //falta ordenar
+            distances = distances.OrderBy(x => x[0]).ToList();
+
 
             return distances.ElementAt(0);
         }
@@ -516,7 +536,9 @@ namespace Modelo
             /*var delegado = new ThreadStart(Run);
             var hilo = new Thread(delegado);
             hilo.Start();*/
-            GetNewXValues();
+            //GetNewXValues();
+            Application.Run(new Form1());
+
         }
         private void Run()
         {
