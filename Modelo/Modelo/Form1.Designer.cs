@@ -35,22 +35,22 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, "2,0");
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.txbIterations = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.pboxPlay = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txbIterations = new System.Windows.Forms.TextBox();
+            this.lblTime = new System.Windows.Forms.Label();
             this.pboxAdd = new System.Windows.Forms.PictureBox();
             this.pboxNext = new System.Windows.Forms.PictureBox();
             this.pboxPrevious = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -68,6 +68,38 @@
             this.panel1.Size = new System.Drawing.Size(184, 636);
             this.panel1.TabIndex = 2;
             // 
+            // pboxPlay
+            // 
+            this.pboxPlay.Image = global::Modelo.Properties.Resources.boton_de_play;
+            this.pboxPlay.Location = new System.Drawing.Point(68, 208);
+            this.pboxPlay.Name = "pboxPlay";
+            this.pboxPlay.Size = new System.Drawing.Size(50, 50);
+            this.pboxPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxPlay.TabIndex = 9;
+            this.pboxPlay.TabStop = false;
+            this.pboxPlay.Click += new System.EventHandler(this.pboxPlay_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(51, 137);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(84, 31);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Iterar";
+            // 
+            // txbIterations
+            // 
+            this.txbIterations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txbIterations.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbIterations.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold);
+            this.txbIterations.ForeColor = System.Drawing.SystemColors.Window;
+            this.txbIterations.Location = new System.Drawing.Point(31, 171);
+            this.txbIterations.Name = "txbIterations";
+            this.txbIterations.Size = new System.Drawing.Size(124, 31);
+            this.txbIterations.TabIndex = 7;
+            // 
             // lblTime
             // 
             this.lblTime.AutoSize = true;
@@ -77,6 +109,42 @@
             this.lblTime.Size = new System.Drawing.Size(55, 31);
             this.lblTime.TabIndex = 5;
             this.lblTime.Text = "0/0";
+            // 
+            // pboxAdd
+            // 
+            this.pboxAdd.Image = global::Modelo.Properties.Resources.mas;
+            this.pboxAdd.Location = new System.Drawing.Point(68, 12);
+            this.pboxAdd.Name = "pboxAdd";
+            this.pboxAdd.Size = new System.Drawing.Size(50, 50);
+            this.pboxAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxAdd.TabIndex = 4;
+            this.pboxAdd.TabStop = false;
+            this.pboxAdd.Click += new System.EventHandler(this.pboxAdd_Click);
+            this.pboxAdd.DoubleClick += new System.EventHandler(this.pboxAdd_Click);
+            // 
+            // pboxNext
+            // 
+            this.pboxNext.Image = global::Modelo.Properties.Resources.proximo;
+            this.pboxNext.Location = new System.Drawing.Point(124, 12);
+            this.pboxNext.Name = "pboxNext";
+            this.pboxNext.Size = new System.Drawing.Size(50, 50);
+            this.pboxNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxNext.TabIndex = 3;
+            this.pboxNext.TabStop = false;
+            this.pboxNext.Click += new System.EventHandler(this.pboxNext_Click);
+            this.pboxNext.DoubleClick += new System.EventHandler(this.pboxNext_Click);
+            // 
+            // pboxPrevious
+            // 
+            this.pboxPrevious.Image = global::Modelo.Properties.Resources.anterior;
+            this.pboxPrevious.Location = new System.Drawing.Point(12, 12);
+            this.pboxPrevious.Name = "pboxPrevious";
+            this.pboxPrevious.Size = new System.Drawing.Size(50, 50);
+            this.pboxPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxPrevious.TabIndex = 2;
+            this.pboxPrevious.TabStop = false;
+            this.pboxPrevious.Click += new System.EventHandler(this.pboxPrevious_Click);
+            this.pboxPrevious.DoubleClick += new System.EventHandler(this.pboxPrevious_Click);
             // 
             // panel2
             // 
@@ -157,74 +225,6 @@
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
             // 
-            // txbIterations
-            // 
-            this.txbIterations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.txbIterations.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txbIterations.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold);
-            this.txbIterations.ForeColor = System.Drawing.SystemColors.Window;
-            this.txbIterations.Location = new System.Drawing.Point(31, 171);
-            this.txbIterations.Name = "txbIterations";
-            this.txbIterations.Size = new System.Drawing.Size(124, 31);
-            this.txbIterations.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(51, 137);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 31);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Iterar";
-            // 
-            // pboxPlay
-            // 
-            this.pboxPlay.Image = global::Modelo.Properties.Resources.boton_de_play;
-            this.pboxPlay.Location = new System.Drawing.Point(68, 208);
-            this.pboxPlay.Name = "pboxPlay";
-            this.pboxPlay.Size = new System.Drawing.Size(50, 50);
-            this.pboxPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxPlay.TabIndex = 9;
-            this.pboxPlay.TabStop = false;
-            this.pboxPlay.Click += new System.EventHandler(this.pboxPlay_Click);
-            // 
-            // pboxAdd
-            // 
-            this.pboxAdd.Image = global::Modelo.Properties.Resources.mas;
-            this.pboxAdd.Location = new System.Drawing.Point(68, 12);
-            this.pboxAdd.Name = "pboxAdd";
-            this.pboxAdd.Size = new System.Drawing.Size(50, 50);
-            this.pboxAdd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxAdd.TabIndex = 4;
-            this.pboxAdd.TabStop = false;
-            this.pboxAdd.Click += new System.EventHandler(this.pboxAdd_Click);
-            this.pboxAdd.DoubleClick += new System.EventHandler(this.pboxAdd_Click);
-            // 
-            // pboxNext
-            // 
-            this.pboxNext.Image = global::Modelo.Properties.Resources.proximo;
-            this.pboxNext.Location = new System.Drawing.Point(124, 12);
-            this.pboxNext.Name = "pboxNext";
-            this.pboxNext.Size = new System.Drawing.Size(50, 50);
-            this.pboxNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxNext.TabIndex = 3;
-            this.pboxNext.TabStop = false;
-            this.pboxNext.Click += new System.EventHandler(this.pboxNext_Click);
-            this.pboxNext.DoubleClick += new System.EventHandler(this.pboxNext_Click);
-            // 
-            // pboxPrevious
-            // 
-            this.pboxPrevious.Image = global::Modelo.Properties.Resources.anterior;
-            this.pboxPrevious.Location = new System.Drawing.Point(12, 12);
-            this.pboxPrevious.Name = "pboxPrevious";
-            this.pboxPrevious.Size = new System.Drawing.Size(50, 50);
-            this.pboxPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxPrevious.TabIndex = 2;
-            this.pboxPrevious.TabStop = false;
-            this.pboxPrevious.Click += new System.EventHandler(this.pboxPrevious_Click);
-            this.pboxPrevious.DoubleClick += new System.EventHandler(this.pboxPrevious_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,12 +238,12 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).EndInit();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
