@@ -10,6 +10,7 @@ namespace Modelo
     public partial class Form1 : Form
     {
         private readonly List<TSPiRole> _tspiRoles;
+        private readonly List<string> _iteractiveStyles;
         private readonly double _gamma;
 
         private readonly double _xMax;
@@ -17,6 +18,7 @@ namespace Modelo
         private readonly double _ratio;
         private readonly double _epsilon;
         private readonly double _r;
+
 
 
         private List<List<double[]>> _pointsHistory;
@@ -40,7 +42,8 @@ namespace Modelo
             ///Inicializa normal
             _tspiRoles = TSPiRole.getRoles();
 
-
+            _iteractiveStyles = new List<string> { "DM", "AT", "FT", "AP", "FC", "TT", "CY", "TR", "DS", "RS", "IM", "CR" };
+            UpdateTable();
 
             ////////////////////////////////////////////////////////////////////////////
             //Divide entre 5 los valores de X
@@ -126,7 +129,20 @@ namespace Modelo
             _pointsHistory.Add(points);
             UpdatePoints();
         }
-
+        private void UpdateTable()
+        {
+            for(var index = 0; index < 7; index++)
+            {
+                var values = new object[7];
+                for(var index2 = 0; index2 < _tspiRoles.Count; index2++)
+                {
+                    var role = _tspiRoles.ElementAt(index2);
+                    values[index2] = role.InteractiveStyles[index, 1];
+                }
+                dataGridView1.Rows.Add(values);
+                dataGridView1.Rows[index].HeaderCell.Value = _iteractiveStyles.ElementAt(index);
+            }
+        }
         private void PrintPoints(TSPiRole role)
         {
             if (role.Index == 0)
