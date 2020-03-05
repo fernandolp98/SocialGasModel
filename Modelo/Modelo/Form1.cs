@@ -28,9 +28,9 @@ namespace Modelo
             _gamma = .01;
             _epsilon = 0.05;
             _r = 3;
-            _ratio = 7;
-            _xMax = 50;
-            _yMax = 50;
+            _ratio = 10;
+            _xMax = 4;
+            _yMax = 4;
             _pointsHistory = new List<List<double[]>>();
 
             chart1.ChartAreas[0].AxisX.Maximum = _xMax;
@@ -38,186 +38,50 @@ namespace Modelo
 
             ///////////////////////////////////////////////////////////////////////////
             ///Inicializa normal
-            //_tspiRoles = new List<TSPiRole>
-            //{
-            //    new TSPiRole()
-            //    {
-            //        Index = 0,
-            //        Name = "TL",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 5.0 },
-            //            { "AT", 5.0 },
-            //            { "FT", 5.0 },
-            //            { "AP", 5.0 },
-            //            { "FC", 3.0 },
-            //            { "TT", 2.0 },
-            //            { "CY", 3.0 },
-            //            { "TR", 2.0 },
-            //            { "DS", 5.0 },
-            //            { "RS", 5.0 },
-            //            { "IM", 1.0 },
-            //            { "CR", 5.0 },
-            //        }
-            //    },
-            //    new TSPiRole()
-            //    {
-            //        Index = 1,
-            //        Name = "PM",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 4.0 },
-            //            { "AT", 4.0 },
-            //            { "FT", 4.0 },
-            //            { "AP", 5.0 },
-            //            { "FC", 3.0 },
-            //            { "TT", 1.0 },
-            //            { "CY", 1.0 },
-            //            { "TR", 1.0 },
-            //            { "DS", 3.0 },
-            //            { "RS", 4.0 },
-            //            { "IM", 1.0 },
-            //            { "CR", 5.0 },
-            //        }
-            //    },
-            //    new TSPiRole()
-            //    {
-            //        Index = 2,
-            //        Name = "QM",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 4.0 },
-            //            { "AT", 0.0 },
-            //            { "FT", 4.0 },
-            //            { "AP", 4.0 },
-            //            { "FC", 1.0 },
-            //            { "TT", 1.0 },
-            //            { "CY", 2.0 },
-            //            { "TR", 0.0 },
-            //            { "DS", 4.0 },
-            //            { "RS", 4.0 },
-            //            { "IM", 0.0 },
-            //            { "CR", 3.0 },
-            //        }
-            //    },
-            //    new TSPiRole()
-            //    {
-            //        Index = 3,
-            //        Name = "SM",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 2.0 },
-            //            { "AT", 3.0 },
-            //            { "FT", 3.0 },
-            //            { "AP", 3.0 },
-            //            { "FC", 5.0 },
-            //            { "TT", 3.0 },
-            //            { "CY", 2.0 },
-            //            { "TR", 2.0 },
-            //            { "DS", 4.0 },
-            //            { "RS", 4.0 },
-            //            { "IM", 2.0 },
-            //            { "CR", 3.0 },
-            //        }
-            //    },
-            //    new TSPiRole()
-            //    {
-            //        Index = 4,
-            //        Name = "DS",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 3.0 },
-            //            { "AT", 5.0 },
-            //            { "FT", 5.0 },
-            //            { "AP", 4.0 },
-            //            { "FC", 5.0 },
-            //            { "TT", 1.0 },
-            //            { "CY", 5.0 },
-            //            { "TR", 4.0 },
-            //            { "DS", 4.0 },
-            //            { "RS", 4.0 },
-            //            { "IM", 3.0 },
-            //            { "CR", 3.0 },
-            //        }
-            //    },
-            //    new TSPiRole()
-            //    {
-            //        Index = 5,
-            //        Name = "IM",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 4.0 },
-            //            { "AT", 4.0 },
-            //            { "FT", 4.0 },
-            //            { "AP", 4.0 },
-            //            { "FC", 4.0 },
-            //            { "TT", 1.0 },
-            //            { "CY", 4.0 },
-            //            { "TR", 4.0 },
-            //            { "DS", 3.0 },
-            //            { "RS", 4.0 },
-            //            { "IM", 3.0 },
-            //            { "CR", 5.0 },
-            //        }
-            //    },
-            //    new TSPiRole()
-            //    {
-            //        Index = 6,
-            //        Name = "TM",
-            //        InteractiveStyles = new object[,]
-            //        {
-            //            { "DM", 3.0 },
-            //            { "AT", 5.0 },
-            //            { "FT", 5.0 },
-            //            { "AP", 4.0 },
-            //            { "FC", 3.0 },
-            //            { "TT", 2.0 },
-            //            { "CY", 4.0 },
-            //            { "TR", 4.0 },
-            //            { "DS", 4.0 },
-            //            { "RS", 4.0 },
-            //            { "IM", 1.0 },
-            //            { "CR", 1.0 },
-            //        }
-            //    },
-            //Here
+            _tspiRoles = TSPiRole.getRoles();
 
-            //};
 
-            //////////////////////////////////////////////////////////////////////////
-            ///Carga 200 roles
-            _tspiRoles = new List<TSPiRole>();
-            for (var i = 0; i < 100; i++)
-            {
-                if (i < 50)
-                    _tspiRoles.Add(new TSPiRole { InteractiveStyles = new object[,] { { "p", -1.0 } } });
-                else
-                    _tspiRoles.Add(new TSPiRole { InteractiveStyles = new object[,] { { "p2", 1.0 } } });
 
-            }
             ////////////////////////////////////////////////////////////////////////////
             //Divide entre 5 los valores de X
-            //for (var index = 0; index < 7; index++)
+            for (var index = 0; index < 7; index++)
+            {
+                var role = _tspiRoles.ElementAt(index);
+                for (var index2 = 0; index2 < 12; index2++)
+                {
+                    role.InteractiveStyles[index2, 1] = (double)role.InteractiveStyles[index2, 1] / 5;
+                }
+            }
+            //////////////////////////////////////////////////////////////////////////
+            ///Carga 200 roles
+            //_tspiRoles = new List<TSPiRole>();
+            //for (var i = 0; i < 100; i++)
             //{
-            //    var role = _tspiRoles.ElementAt(index);
-            //    for (var index2 = 0; index2 < 12; index2++)
-            //    {
-            //        role.InteractiveStyles[index2, 1] = (double)role.InteractiveStyles[index2, 1] / 5;
-            //    }
+            //    if (i < 50)
+            //        _tspiRoles.Add(new TSPiRole { InteractiveStyles = new object[,] { { "t1", -1.0 } } });
+            //    else
+            //        _tspiRoles.Add(new TSPiRole { InteractiveStyles = new object[,] { { "t2", 1.0 } } });
+
             //}
             ///////////////////////////////////////////////////////////////////////////////
             ///Carga 4 puntos en las esquinas
             //_tspiRoles = new List<TSPiRole>();
-            //_tspiRoles.Add(new TSPiRole { Name = "Down Left", InteractiveStyles = new object[,] { { "", -1.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "Top Left", InteractiveStyles = new object[,] { { "", -1.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "Top, Right", InteractiveStyles = new object[,] { { "", -1.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "Down Right", InteractiveStyles = new object[,] { { "", -1.0 } } });
+            //_tspiRoles.Add(new TSPiRole { Name = "A", InteractiveStyles = new object[,] { { "", 1.0 } } });
+            //_tspiRoles.Add(new TSPiRole { Name = "B", InteractiveStyles = new object[,] { { "", 1.0 } } });
+            //_tspiRoles.Add(new TSPiRole { Name = "C", InteractiveStyles = new object[,] { { "", 2.0 } } });
+            //_tspiRoles.Add(new TSPiRole { Name = "D", InteractiveStyles = new object[,] { { "", 2.0 } } });
+            //_tspiRoles.Add(new TSPiRole { Name = "E", InteractiveStyles = new object[,] { { "", 3.0 } } });
+            //_tspiRoles.Add(new TSPiRole { Name = "F", InteractiveStyles = new object[,] { { "", 3.0 } } });
+
 
             //var points = new List<double[]>();
-            //points.Add(new[] {0.0, 0.0 });
             //points.Add(new[] { 1.0, 3.0 });
-            //points.Add(new[] { 3.0, 3.0 });
-            //points.Add(new[] { 3.0, 1.0 });
+            //points.Add(new[] { 3.5, 2.0 });
+            //points.Add(new[] { 2.5, 1.0 });
+            //points.Add(new[] { 3.0, 3.5 });
+            //points.Add(new[] { 1.0, 1.0 });
+            //points.Add(new[] { 2.0, 1.5 });
+
             //_currentIndexHistory = 0;
             //_pointsHistory.Add(points);
             //UpdatePoints();
@@ -231,6 +95,11 @@ namespace Modelo
         {
             //////////////////////////////////////////////////////////////////////////////////
             ///Agrega valores random x,y
+            SetRandomPoints();
+            ///////////////////////////////////////////////////////////////////////////////
+        }
+        private void SetRandomPoints()
+        {
             var points = new List<double[]>();
             for (var index = 0; index < _tspiRoles.Count(); index++)
             {
@@ -256,8 +125,6 @@ namespace Modelo
             _currentIndexHistory = 0;
             _pointsHistory.Add(points);
             UpdatePoints();
-            ///////////////////////////////////////////////////////////////////////////////
-
         }
 
         private void PrintPoints(TSPiRole role)
@@ -269,6 +136,7 @@ namespace Modelo
 
         private void UpdateChart()
         {
+            chart1.Series.Clear();
             //if(chart1.InvokeRequired)
             //{
             //    chart1.Invoke(new MethodInvoker(delegate
@@ -277,30 +145,47 @@ namespace Modelo
             //        button2.Enabled = false;
             //    }));
             //}
-            chart1.Series.Clear();
-            var serie = new Series
-            {
-                Name = $"Team 1",
-                ChartType = SeriesChartType.Point
-            };
-            var serie2 = new Series
-            {
-                Name = $"Team 2",
-                ChartType = SeriesChartType.Point
-            };
-            for (var index = 0; index < _tspiRoles.Count / 2; index++)
-            {
-                var role = _tspiRoles.ElementAt(index);
-                serie.Points.AddXY(role.X, role.Y);
-            }
-            for (var index = _tspiRoles.Count / 2; index < _tspiRoles.Count; index++)
-            {
-                var role = _tspiRoles.ElementAt(index);
 
-                serie2.Points.AddXY(role.X, role.Y);
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var role = _tspiRoles.ElementAt(index);
+                var serie = new Series
+                {
+                    Name = $"{role.Name} - ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
+                    ChartType = SeriesChartType.Point
+                };
+                serie.Points.AddXY(role.X, role.Y);
+                chart1.Series.Add(serie);
             }
-            chart1.Series.Add(serie);
-            chart1.Series.Add(serie2);
+
+
+
+
+            ///////////////////////////////////////////////////////////////////
+            //chart1.Series.Clear();
+            //var serie = new Series
+            //{
+            //    Name = $"Team 1",
+            //    ChartType = SeriesChartType.Point
+            //};
+            //var serie2 = new Series
+            //{
+            //    Name = $"Team 2",
+            //    ChartType = SeriesChartType.Point
+            //};
+            //for (var index = 0; index < _tspiRoles.Count / 2; index++)
+            //{
+            //    var role = _tspiRoles.ElementAt(index);
+            //    serie.Points.AddXY(role.X, role.Y);
+            //}
+            //for (var index = _tspiRoles.Count / 2; index < _tspiRoles.Count; index++)
+            //{
+            //    var role = _tspiRoles.ElementAt(index);
+
+            //    serie2.Points.AddXY(role.X, role.Y);
+            //}
+            //chart1.Series.Add(serie);
+            //chart1.Series.Add(serie2);
 
 
         }
@@ -419,7 +304,8 @@ namespace Modelo
                 }
                 else
                 {
-                    step1 += (n.X - posX) / m;
+                    var nVal = (n.X - posX) / m;
+                    step1 += nVal;
                 }
                 step2 += (double)n.InteractiveStyles[a, 1];
             }
@@ -440,6 +326,13 @@ namespace Modelo
         }
         private double PosY(TSPiRole rol, int a)
         {
+            if (rol.Name == "B")
+            {
+                if (true)
+                {
+
+                }
+            }
             var posY = rol.Y;
 
             var step1 = 0.0; //Primer suumatoria de la ecuación
@@ -460,11 +353,12 @@ namespace Modelo
                 }
                 if (m == 0)
                 {
-                    step1 += (n.X - posY);
+                    step1 += (n.Y - posY);
                 }
                 else
                 {
-                    step1 += (n.X - posY) / m;
+                    var nVal = (n.Y - posY) / m;
+                    step1 += nVal;
                 }
                 step2 += (double)n.InteractiveStyles[a, 1];
             }
@@ -526,7 +420,7 @@ namespace Modelo
             {
                 Console.WriteLine("zdxz");
             }
-            //GetNewXValues();
+            GetNewXValues();
             GetNextPoints();
         }
 
