@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,16 +14,17 @@ namespace Modelo
 
         private readonly List<TSPiRole> _tspiRoles;
         private readonly List<string> _interactiveStyles;
-        private readonly double _gamma;
 
         private readonly double _xMax;
         private readonly double _yMax;
-        private readonly double _ratio;
-        private readonly double _epsilon;
-        private readonly double _r;
 
-        private int sleep = 500;
+        private double _ratio;
+        private double _gamma;
+        private double _epsilon;
+        private double _r;
 
+        private int _sleep = 500;
+        private Thread _hilo;
 
 
         private readonly List<List<double[]>> _pointsHistory;
@@ -33,6 +35,7 @@ namespace Modelo
         public Form1()
         {
             InitializeComponent();
+
             _gamma = .001;
             _epsilon = 0.01;
             _r = 3;
@@ -173,7 +176,8 @@ namespace Modelo
                 var role = _tspiRoles.ElementAt(index);
                 var serie = new Series
                 {
-                    Name = $"{role.Name} - ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
+                    //Name = $"{role.Name} - ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
+                    Name = $"{role.Name})",
                     ChartType = SeriesChartType.Point
                 };
                 serie.Points.AddXY(role.X, role.Y);
@@ -470,14 +474,21 @@ namespace Modelo
 
         private void pboxPlay_Click(object sender, EventArgs e)
         {
-            var delegado = new ThreadStart(Run);
-            var hilo = new Thread(delegado);
-            hilo.Start();
-            GetNewXValues();
+            if (_hilo != null && _hilo.IsAlive) return;
+            ThreadStart delegado = Run;
+            _hilo = new Thread(delegado);
+            _hilo.Start();
+            pboxPlay.Visible = false;
+            pboxStop.Visible = true;
+        }
+        private void pboxStop_Click(object sender, EventArgs e)
+        {
+            _hilo.Abort();
+            pboxPlay.Visible = true;
+            pboxStop.Visible = false;
         }
         private void Run()
         {
-            Console.WriteLine(":)");
             var isNumber = int.TryParse(txbIterations.Text, out var iterations);
             if (!isNumber) return;
             for (var index = 0; index < iterations; index++)
@@ -488,27 +499,61 @@ namespace Modelo
                     _currentIndexHistory = _pointsHistory.Count - 1;
                     UpdatePoints();
                 }
-                _currentIndexHistory++;
-                if (lblTime.InvokeRequired)
-                {
-                    lblTime.Invoke(new MethodInvoker(delegate
-                    {
-                        lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count + 1}";
-
-                    }));
-                }
                 GetNewXValues();
                 GetNextPosition();
-                Thread.Sleep(sleep);
-            }
+                _currentIndexHistory++;
+                lblTime.Invoke(new MethodInvoker(delegate
+                {
+                    lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count}";
 
-            //_event.Reset();
+                }));
+                Thread.Sleep(_sleep);
+            }
+            pboxPlay.Invoke(new MethodInvoker(delegate
+            {
+                pboxPlay.Visible = true;
+                pboxStop.Visible = false;
+            }));
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             label2.Text = $@"{trackBar1.Value * 100} ms";
-            sleep = trackBar1.Value * 100;
+            _sleep = trackBar1.Value * 100;
         }
+
+        private void txbRatio_Validated(object sender, EventArgs e)
+        {
+            var isNumber = double.TryParse(txbRatio.Text, out var newValue);
+            if (isNumber)
+                _ratio = newValue;
+            txbRatio.Text = _ratio.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void txbGamma_Validated(object sender, EventArgs e)
+        {
+            var isNumber = double.TryParse(txbGamma.Text, out var newValue);
+            if (isNumber)
+                _gamma = newValue;
+            txbGamma.Text = _gamma.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void txbEpsilon_Validated(object sender, EventArgs e)
+        {
+            var isNumber = double.TryParse(txbEpsilon.Text, out var newValue);
+            if (isNumber)
+                _epsilon = newValue;
+            txbEpsilon.Text = _epsilon.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void txbR_Validated(object sender, EventArgs e)
+        {
+            var isNumber = double.TryParse(txbR.Text, out var newValue);
+            if (isNumber)
+                _r = newValue;
+            txbR.Text = _r.ToString(CultureInfo.InvariantCulture);
+        }
+
+
     }
 }

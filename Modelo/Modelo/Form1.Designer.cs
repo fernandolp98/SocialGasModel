@@ -35,6 +35,18 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, "2,0");
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pboxStop = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txbRatio = new System.Windows.Forms.TextBox();
+            this.txbEpsilon = new System.Windows.Forms.TextBox();
+            this.txbR = new System.Windows.Forms.TextBox();
+            this.txbGamma = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.pboxPlay = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txbIterations = new System.Windows.Forms.TextBox();
@@ -55,9 +67,10 @@
             this.DS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxStop)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).BeginInit();
@@ -68,30 +81,177 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.trackBar1);
-            this.panel1.Controls.Add(this.pboxPlay);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.txbIterations);
             this.panel1.Controls.Add(this.lblTime);
             this.panel1.Controls.Add(this.pboxAdd);
             this.panel1.Controls.Add(this.pboxNext);
             this.panel1.Controls.Add(this.pboxPrevious);
+            this.panel1.Controls.Add(this.pboxPlay);
+            this.panel1.Controls.Add(this.pboxStop);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(184, 636);
             this.panel1.TabIndex = 2;
             // 
+            // pboxStop
+            // 
+            this.pboxStop.Image = global::Modelo.Properties.Resources.detener;
+            this.pboxStop.Location = new System.Drawing.Point(64, 143);
+            this.pboxStop.Name = "pboxStop";
+            this.pboxStop.Size = new System.Drawing.Size(50, 50);
+            this.pboxStop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxStop.TabIndex = 17;
+            this.pboxStop.TabStop = false;
+            this.pboxStop.Visible = false;
+            this.pboxStop.Click += new System.EventHandler(this.pboxStop_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txbRatio);
+            this.groupBox1.Controls.Add(this.txbEpsilon);
+            this.groupBox1.Controls.Add(this.txbR);
+            this.groupBox1.Controls.Add(this.txbGamma);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(12, 292);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(166, 160);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Parámetros";
+            // 
+            // txbRatio
+            // 
+            this.txbRatio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txbRatio.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbRatio.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbRatio.ForeColor = System.Drawing.SystemColors.Window;
+            this.txbRatio.Location = new System.Drawing.Point(98, 26);
+            this.txbRatio.Name = "txbRatio";
+            this.txbRatio.Size = new System.Drawing.Size(62, 22);
+            this.txbRatio.TabIndex = 23;
+            this.txbRatio.Text = "2";
+            this.txbRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbRatio.Validated += new System.EventHandler(this.txbRatio_Validated);
+            // 
+            // txbEpsilon
+            // 
+            this.txbEpsilon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txbEpsilon.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbEpsilon.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbEpsilon.ForeColor = System.Drawing.SystemColors.Window;
+            this.txbEpsilon.Location = new System.Drawing.Point(98, 84);
+            this.txbEpsilon.Name = "txbEpsilon";
+            this.txbEpsilon.Size = new System.Drawing.Size(62, 22);
+            this.txbEpsilon.TabIndex = 22;
+            this.txbEpsilon.Text = ".001";
+            this.txbEpsilon.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbEpsilon.Validated += new System.EventHandler(this.txbEpsilon_Validated);
+            // 
+            // txbR
+            // 
+            this.txbR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txbR.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbR.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbR.ForeColor = System.Drawing.SystemColors.Window;
+            this.txbR.Location = new System.Drawing.Point(98, 113);
+            this.txbR.Name = "txbR";
+            this.txbR.Size = new System.Drawing.Size(62, 22);
+            this.txbR.TabIndex = 21;
+            this.txbR.Text = "3";
+            this.txbR.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbR.Validated += new System.EventHandler(this.txbR_Validated);
+            // 
+            // txbGamma
+            // 
+            this.txbGamma.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txbGamma.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbGamma.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbGamma.ForeColor = System.Drawing.SystemColors.Window;
+            this.txbGamma.Location = new System.Drawing.Point(98, 55);
+            this.txbGamma.Name = "txbGamma";
+            this.txbGamma.Size = new System.Drawing.Size(62, 22);
+            this.txbGamma.TabIndex = 20;
+            this.txbGamma.Text = ".001";
+            this.txbGamma.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbGamma.Validated += new System.EventHandler(this.txbGamma_Validated);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(69, 113);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(23, 24);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "r:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(6, 84);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(86, 24);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Epsilon:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(5, 55);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 24);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Gamma:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(22, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 24);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Radio:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 251);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "500 ms";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(8, 222);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(166, 45);
+            this.trackBar1.TabIndex = 10;
+            this.trackBar1.Value = 5;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // pboxPlay
             // 
             this.pboxPlay.Image = global::Modelo.Properties.Resources.boton_de_play;
-            this.pboxPlay.Location = new System.Drawing.Point(68, 208);
+            this.pboxPlay.Location = new System.Drawing.Point(64, 143);
             this.pboxPlay.Name = "pboxPlay";
             this.pboxPlay.Size = new System.Drawing.Size(50, 50);
             this.pboxPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -102,10 +262,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(51, 137);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(23, 88);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 31);
+            this.label1.Size = new System.Drawing.Size(57, 24);
             this.label1.TabIndex = 8;
             this.label1.Text = "Iterar";
             // 
@@ -113,22 +273,24 @@
             // 
             this.txbIterations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txbIterations.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txbIterations.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold);
+            this.txbIterations.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txbIterations.ForeColor = System.Drawing.SystemColors.Window;
-            this.txbIterations.Location = new System.Drawing.Point(31, 171);
+            this.txbIterations.Location = new System.Drawing.Point(27, 115);
             this.txbIterations.Name = "txbIterations";
-            this.txbIterations.Size = new System.Drawing.Size(124, 31);
+            this.txbIterations.Size = new System.Drawing.Size(124, 22);
             this.txbIterations.TabIndex = 7;
+            this.txbIterations.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(63, 65);
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(12, 65);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(55, 31);
+            this.lblTime.Size = new System.Drawing.Size(31, 18);
             this.lblTime.TabIndex = 5;
             this.lblTime.Text = "1/1";
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pboxAdd
             // 
@@ -345,25 +507,6 @@
             this.TM.Name = "TM";
             this.TM.ReadOnly = true;
             // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(12, 278);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(166, 45);
-            this.trackBar1.TabIndex = 10;
-            this.trackBar1.Value = 5;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(66, 307);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 16);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "500 ms";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -377,6 +520,10 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxStop)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).EndInit();
@@ -387,7 +534,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -416,6 +562,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TM;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txbRatio;
+        private System.Windows.Forms.TextBox txbEpsilon;
+        private System.Windows.Forms.TextBox txbR;
+        private System.Windows.Forms.TextBox txbGamma;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pboxStop;
     }
 }
 
