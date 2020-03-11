@@ -28,14 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, "2,0");
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, "2,0");
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pboxStop = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txbRatio = new System.Windows.Forms.TextBox();
             this.txbEpsilon = new System.Windows.Forms.TextBox();
@@ -47,13 +46,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.pboxPlay = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txbIterations = new System.Windows.Forms.TextBox();
             this.lblTime = new System.Windows.Forms.Label();
             this.pboxAdd = new System.Windows.Forms.PictureBox();
             this.pboxNext = new System.Windows.Forms.PictureBox();
             this.pboxPrevious = new System.Windows.Forms.PictureBox();
+            this.pboxPlay = new System.Windows.Forms.PictureBox();
+            this.pboxStop = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -67,14 +67,15 @@
             this.DS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxStop)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxStop)).BeginInit();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -85,6 +86,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.trackBar1);
@@ -101,18 +103,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(184, 636);
             this.panel1.TabIndex = 2;
-            // 
-            // pboxStop
-            // 
-            this.pboxStop.Image = global::Modelo.Properties.Resources.detener;
-            this.pboxStop.Location = new System.Drawing.Point(64, 143);
-            this.pboxStop.Name = "pboxStop";
-            this.pboxStop.Size = new System.Drawing.Size(50, 50);
-            this.pboxStop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxStop.TabIndex = 17;
-            this.pboxStop.TabStop = false;
-            this.pboxStop.Visible = false;
-            this.pboxStop.Click += new System.EventHandler(this.pboxStop_Click);
             // 
             // groupBox1
             // 
@@ -142,7 +132,7 @@
             this.txbRatio.Name = "txbRatio";
             this.txbRatio.Size = new System.Drawing.Size(62, 22);
             this.txbRatio.TabIndex = 23;
-            this.txbRatio.Text = "2";
+            this.txbRatio.Text = "4";
             this.txbRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbRatio.Validated += new System.EventHandler(this.txbRatio_Validated);
             // 
@@ -156,7 +146,7 @@
             this.txbEpsilon.Name = "txbEpsilon";
             this.txbEpsilon.Size = new System.Drawing.Size(62, 22);
             this.txbEpsilon.TabIndex = 22;
-            this.txbEpsilon.Text = ".001";
+            this.txbEpsilon.Text = ".2";
             this.txbEpsilon.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbEpsilon.Validated += new System.EventHandler(this.txbEpsilon_Validated);
             // 
@@ -248,17 +238,6 @@
             this.trackBar1.Value = 5;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
-            // pboxPlay
-            // 
-            this.pboxPlay.Image = global::Modelo.Properties.Resources.boton_de_play;
-            this.pboxPlay.Location = new System.Drawing.Point(64, 143);
-            this.pboxPlay.Name = "pboxPlay";
-            this.pboxPlay.Size = new System.Drawing.Size(50, 50);
-            this.pboxPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pboxPlay.TabIndex = 9;
-            this.pboxPlay.TabStop = false;
-            this.pboxPlay.Click += new System.EventHandler(this.pboxPlay_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -328,6 +307,29 @@
             this.pboxPrevious.Click += new System.EventHandler(this.pboxPrevious_Click);
             this.pboxPrevious.DoubleClick += new System.EventHandler(this.pboxPrevious_Click);
             // 
+            // pboxPlay
+            // 
+            this.pboxPlay.Image = global::Modelo.Properties.Resources.boton_de_play;
+            this.pboxPlay.Location = new System.Drawing.Point(64, 143);
+            this.pboxPlay.Name = "pboxPlay";
+            this.pboxPlay.Size = new System.Drawing.Size(50, 50);
+            this.pboxPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxPlay.TabIndex = 9;
+            this.pboxPlay.TabStop = false;
+            this.pboxPlay.Click += new System.EventHandler(this.pboxPlay_Click);
+            // 
+            // pboxStop
+            // 
+            this.pboxStop.Image = global::Modelo.Properties.Resources.detener;
+            this.pboxStop.Location = new System.Drawing.Point(64, 143);
+            this.pboxStop.Name = "pboxStop";
+            this.pboxStop.Size = new System.Drawing.Size(50, 50);
+            this.pboxStop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pboxStop.TabIndex = 17;
+            this.pboxStop.TabStop = false;
+            this.pboxStop.Visible = false;
+            this.pboxStop.Click += new System.EventHandler(this.pboxStop_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.tabControl1);
@@ -363,69 +365,69 @@
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisX.Interval = 0.5D;
-            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea1.AxisX.LineColor = System.Drawing.Color.White;
-            chartArea1.AxisX.MajorGrid.Interval = 1D;
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisX.Maximum = 4D;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisX.MinorGrid.Enabled = true;
-            chartArea1.AxisX.MinorGrid.Interval = 0.1D;
-            chartArea1.AxisX.MinorGrid.IntervalOffset = double.NaN;
-            chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
-            chartArea1.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
-            chartArea1.AxisX2.Interval = 1D;
-            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisY.Interval = 0.5D;
-            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea1.AxisY.LineColor = System.Drawing.Color.White;
-            chartArea1.AxisY.MajorGrid.Interval = 1D;
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisY.Maximum = 4D;
-            chartArea1.AxisY.Minimum = 0D;
-            chartArea1.AxisY.MinorGrid.Enabled = true;
-            chartArea1.AxisY.MinorGrid.Interval = 0.1D;
-            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
-            chartArea1.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
-            chartArea1.BackColor = System.Drawing.Color.DimGray;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea2.AxisX.Interval = 0.5D;
+            chartArea2.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea2.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea2.AxisX.MajorGrid.Interval = 1D;
+            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisX.Maximum = 4D;
+            chartArea2.AxisX.Minimum = 0D;
+            chartArea2.AxisX.MinorGrid.Enabled = true;
+            chartArea2.AxisX.MinorGrid.Interval = 0.1D;
+            chartArea2.AxisX.MinorGrid.IntervalOffset = double.NaN;
+            chartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea2.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea2.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
+            chartArea2.AxisX2.Interval = 1D;
+            chartArea2.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea2.AxisY.Interval = 0.5D;
+            chartArea2.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea2.AxisY.LineColor = System.Drawing.Color.White;
+            chartArea2.AxisY.MajorGrid.Interval = 1D;
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisY.Maximum = 4D;
+            chartArea2.AxisY.Minimum = 0D;
+            chartArea2.AxisY.MinorGrid.Enabled = true;
+            chartArea2.AxisY.MinorGrid.Interval = 0.1D;
+            chartArea2.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea2.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea2.BackColor = System.Drawing.Color.DimGray;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.BackColor = System.Drawing.Color.Gray;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend2.BackColor = System.Drawing.Color.Gray;
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(3, 3);
             this.chart1.Name = "chart1";
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.LabelAngle = 90;
-            series1.LabelBackColor = System.Drawing.Color.DimGray;
-            series1.LabelForeColor = System.Drawing.Color.White;
-            series1.Legend = "Legend1";
-            series1.Name = "Serie";
-            series1.Points.Add(dataPoint1);
-            series1.XValueMember = "10";
-            series1.YValueMembers = "10";
-            series1.YValuesPerPoint = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            series2.Points.Add(dataPoint2);
-            series2.YValuesPerPoint = 2;
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series3.LabelAngle = 90;
+            series3.LabelBackColor = System.Drawing.Color.DimGray;
+            series3.LabelForeColor = System.Drawing.Color.White;
+            series3.Legend = "Legend1";
+            series3.Name = "Serie";
+            series3.Points.Add(dataPoint3);
+            series3.XValueMember = "10";
+            series3.YValueMembers = "10";
+            series3.YValuesPerPoint = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series4.Legend = "Legend1";
+            series4.Name = "Series2";
+            series4.Points.Add(dataPoint4);
+            series4.YValuesPerPoint = 2;
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(903, 604);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
@@ -507,6 +509,16 @@
             this.TM.Name = "TM";
             this.TM.ReadOnly = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(8, 458);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -520,14 +532,14 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxStop)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxAdd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxNext)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxPrevious)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxPlay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxStop)).EndInit();
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -572,6 +584,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pboxStop;
+        private System.Windows.Forms.Button button1;
     }
 }
 

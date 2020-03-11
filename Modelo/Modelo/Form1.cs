@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -37,9 +38,9 @@ namespace Modelo
             InitializeComponent();
 
             _gamma = .001;
-            _epsilon = 0.01;
+            _epsilon = 0.2;
             _r = 3;
-            _ratio = 2;
+            _ratio = 4;
             _xMax = 4;
             _yMax = 4;
 
@@ -236,10 +237,10 @@ namespace Modelo
         private double[] GetNewXValue(TSPiRole role)
         {
             var newX = new double[12];
-            var step1 = 0.0;
             for (var index = 0; index < _interactiveStyles.Count; index++)
             {
                 var n = 0;
+                var step1 = 0.0; // here jeje
                 for (var index2 = 0; index2 < _tspiRoles.Count; index2++)
                 {
                     var nj = _tspiRoles[index2];
@@ -253,14 +254,16 @@ namespace Modelo
                     var step2 = (_epsilon / n) * step1;
                     var x = role.InteractiveStyles[index];
                     var step3 = (1 - _epsilon) * F(x);
-                    newX[index] = step3 + step2;
+                    var result = step3 + step2;
+                    newX[index] = result * 5;
                 }
                 else
                 {
                     var step2 =  step1;
                     var x = role.InteractiveStyles[index];
                     var step3 =  F(x);
-                    newX[index] = step3 + step2;
+                    var result = step3 + step2;
+                    newX[index] = result * 5;
                 }
 
             }
@@ -270,7 +273,8 @@ namespace Modelo
         {
             x /= 5;
             var f = _r * (x) * (1 - (x));
-            return f * 5;
+            //return f;
+            return f;
         }
         private void GetNextPosition()
         {
@@ -554,6 +558,23 @@ namespace Modelo
             txbR.Text = _r.ToString(CultureInfo.InvariantCulture);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var text = "";
+            for(var index = 0; index < _interactiveStyles.Count; index++)
+            {
+                for(var index2 = 0; index2 < _tspiRoles.Count; index2++)
+                {
+                    text += _tspiRoles.ElementAt(index2).InteractiveStyles.ElementAt(index) + ",";
+                }
+                text += "\n";
+            }
+            FileStream f = new FileStream("output.txt", FileMode.Create);
+            StreamWriter s = new StreamWriter(f);
 
+            s.WriteLine(text);
+            s.Close();
+            f.Close();
+        }
     }
 }
