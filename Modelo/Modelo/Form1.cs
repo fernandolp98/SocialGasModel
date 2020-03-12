@@ -14,7 +14,7 @@ namespace Modelo
         ManualResetEvent _event = new ManualResetEvent(true);
 
         private readonly List<TSPiRole> _tspiRoles;
-        private readonly List<string> _interactiveStyles;
+        private readonly List<object[]> _interactiveStyles;
 
         private readonly double _xMax;
         private readonly double _yMax;
@@ -32,6 +32,7 @@ namespace Modelo
         private readonly List<List<double[]>> _interactiveStylesHistory;
 
         private int _currentIndexHistory;
+
 
         public Form1()
         {
@@ -56,7 +57,23 @@ namespace Modelo
             _tspiRoles = TSPiRole.getRoles();
             _interactiveStylesHistory.Add(TSPiRole.GetInteractiveStyles());
 
-            _interactiveStyles = new List<string> { "DM", "AT", "FT", "AP", "FC", "TT", "CY", "TR", "DS", "RS", "IM", "CR" };
+            _interactiveStyles = new List<object[]> { 
+                new object[]{ "DM", 10 }, 
+                new object[] { "AT", 1 }, 
+                new object[] { "FT", 1 }, 
+                new object[] { "AP", 1 }, 
+                new object[]{ "FC", 1 }, 
+                new object[]{ "TT", 1 }, 
+                new object[]{ "CY", 1 }, 
+                new object[] { "TR", 1 },
+                new object[] { "DS", 1 },
+                new object[] { "RS", 1 },
+                new object[] { "IM", 1 },
+                new object[]{ "CR", 1 }
+                };
+
+
+            //{TR, AP, AP, AP, AP, AP, }
 
             ////////////////////////////////////////////////////////////////////////////
             //Divide entre 5 los valores de X
@@ -135,6 +152,50 @@ namespace Modelo
             _pointsHistory.Add(points);
             UpdatePoints();
         }
+        private int getRandom(int min, int max)
+        {
+            var guid = Guid.NewGuid();
+            var justNumbers = new string(guid.ToString().Where(Char.IsDigit).ToArray());
+            var seed = int.Parse(justNumbers.Substring(0, 4));
+            var random = new Random(seed);
+            return random.Next(min, max);
+        }
+        private int GetRandomIS()
+        {
+            var interactiveStyles = new List<string>();
+            var isSelect = new List<string>();
+            var isAparitions = new List<int>();
+            var weights = new List<int>();
+            var n = 0;
+            for (int index = 0; index < _interactiveStyles.Count; index++)
+            {
+                var isSelected = (string)_interactiveStyles.ElementAt(index)[0];
+                interactiveStyles.Add(isSelected);
+                isSelect.Add(isSelected);
+                isAparitions.Add(0);
+                weights.Add((int)_interactiveStyles.ElementAt(index)[1]);
+                n += (int)_interactiveStyles.ElementAt(index)[1];
+            }
+            var listIS = new List<int>();
+            while(listIS.Count < n)
+            {
+                var selectedIndex = getRandom(0, isSelect.Count);
+                var position = interactiveStyles.IndexOf(isSelect.ElementAt(selectedIndex));
+                var weight = weights.ElementAt(position);
+                var aparitions = isAparitions.ElementAt(position);
+                if(aparitions < weight)
+                {
+                    listIS.Add(position);
+                    aparitions++;
+                    if(aparitions == weight)
+                    {
+                        isSelect.RemoveAt(selectedIndex);
+                    }
+                    isAparitions[position] = aparitions;
+                }
+            }
+            return listIS.ElementAt(getRandom(0, 12));
+        }
 
         private void UpdateTable2()
         {
@@ -150,6 +211,9 @@ namespace Modelo
                 dataGridView1.Rows.Add(values);
                 dataGridView1.Rows[index].HeaderCell.Value = _interactiveStyles.ElementAt(index);
             }
+            dataGridView1.Rows[0].Selected = false;
+
+
         }
         private void UpdateTable()
         {
@@ -162,13 +226,6 @@ namespace Modelo
                 UpdateTable2();
             }
         }
-        private void PrintPoints(TSPiRole role)
-        {
-            if (role.Index == 0)
-                Console.WriteLine(@"------------------------------------------------");
-            Console.WriteLine($@"{role.Name} -> X: {role.X}, Y: {role.Y}");
-        }
-
         private void UpdateChart2()
         {
             chart1.Series.Clear();
@@ -279,8 +336,7 @@ namespace Modelo
         private void GetNextPosition()
         {
             var newPoints = new List<double[]>();
-            var rand = new Random();
-            var a = rand.Next(0, 11);
+            var a = GetRandomIS();
             //var a = 0;
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
