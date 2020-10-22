@@ -11,13 +11,13 @@ namespace Modelo
 {
     public partial class Form1 : Form
     {
-        ManualResetEvent _event = new ManualResetEvent(true);
+        readonly ManualResetEvent _event = new ManualResetEvent(true);
 
         private readonly List<TSPiRole> _tspiRoles;
         private readonly List<object[]> _interactiveStyles;
 
-        private readonly double _xMax;
-        private readonly double _yMax;
+        private readonly double _xMaxChart;
+        private readonly double _yMaxChart;
 
         private double _ratio;
         private double _gamma;
@@ -30,6 +30,8 @@ namespace Modelo
 
         private readonly List<List<double[]>> _pointsHistory;
         private readonly List<List<double[]>> _interactiveStylesHistory;
+        private readonly List<int> _ISSelectedHistory;
+
 
         private int _currentIndexHistory;
 
@@ -40,17 +42,18 @@ namespace Modelo
 
             _gamma = .001;
             _epsilon = 0.2;
-            _r = 3;
-            _ratio = 4;
-            _xMax = 4;
-            _yMax = 4;
+            _r = 3.56;
+            _ratio = 1;
+            _xMaxChart = 4;
+            _yMaxChart = 4;
 
             _pointsHistory = new List<List<double[]>>();
             _interactiveStylesHistory = new List<List<double[]>>();
+            _ISSelectedHistory = new List<int>();
             _currentIndexHistory = 0;
 
-            chart1.ChartAreas[0].AxisX.Maximum = _xMax;
-            chart1.ChartAreas[0].AxisY.Maximum = _yMax;
+            chart1.ChartAreas[0].AxisX.Maximum = _xMaxChart;
+            chart1.ChartAreas[0].AxisY.Maximum = _yMaxChart;
 
             ///////////////////////////////////////////////////////////////////////////
             //Inicializa normal
@@ -58,7 +61,7 @@ namespace Modelo
             _interactiveStylesHistory.Add(TSPiRole.GetInteractiveStyles());
 
             _interactiveStyles = new List<object[]> { 
-                new object[]{ "DM", 10 }, 
+                new object[]{ "DM", 1 }, 
                 new object[] { "AT", 1 }, 
                 new object[] { "FT", 1 }, 
                 new object[] { "AP", 1 }, 
@@ -131,7 +134,7 @@ namespace Modelo
             SetRandomPoints();
             UpdateInteractiveStyles();
             UpdateTable();
-            ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
         }
         private void SetRandomPoints()
         {
@@ -139,12 +142,12 @@ namespace Modelo
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var guid = Guid.NewGuid();
-                var justNumbers = new string(guid.ToString().Where(Char.IsDigit).ToArray());
+                var justNumbers = new string(guid.ToString().Where(char.IsDigit).ToArray());
                 var seed = int.Parse(justNumbers.Substring(0, 4));
                 var random = new Random(seed);
 
-                var xValue = random.NextDouble() * (_xMax - 0) + 0;
-                var yValue = random.NextDouble() * (_yMax - 0) + 0;
+                var xValue = random.NextDouble() * (2 - 0) + 0;
+                var yValue = random.NextDouble() * (2 - 0) + 0;
                 var newPoints = new[] { xValue, yValue };
                 points.Add(newPoints);
             }
@@ -152,7 +155,7 @@ namespace Modelo
             _pointsHistory.Add(points);
             UpdatePoints();
         }
-        private int getRandom(int min, int max)
+        private int GetRandom(int min, int max)
         {
             var guid = Guid.NewGuid();
             var justNumbers = new string(guid.ToString().Where(Char.IsDigit).ToArray());
@@ -160,14 +163,14 @@ namespace Modelo
             var random = new Random(seed);
             return random.Next(min, max);
         }
-        private int GetRandomIS()
+        private int GetRandomIs()//Retorna el IS rándom basandose en una lista de elementos ordenados aleatoriamente dados sus pesos
         {
             var interactiveStyles = new List<string>();
             var isSelect = new List<string>();
             var isAparitions = new List<int>();
             var weights = new List<int>();
             var n = 0;
-            for (int index = 0; index < _interactiveStyles.Count; index++)
+            for (var index = 0; index < _interactiveStyles.Count; index++)
             {
                 var isSelected = (string)_interactiveStyles.ElementAt(index)[0];
                 interactiveStyles.Add(isSelected);
@@ -179,7 +182,7 @@ namespace Modelo
             var listIS = new List<int>();
             while(listIS.Count < n)
             {
-                var selectedIndex = getRandom(0, isSelect.Count);
+                var selectedIndex = GetRandom(0, isSelect.Count);
                 var position = interactiveStyles.IndexOf(isSelect.ElementAt(selectedIndex));
                 var weight = weights.ElementAt(position);
                 var aparitions = isAparitions.ElementAt(position);
@@ -194,7 +197,7 @@ namespace Modelo
                     isAparitions[position] = aparitions;
                 }
             }
-            return listIS.ElementAt(getRandom(0, 12));
+            return listIS.ElementAt(GetRandom(0, listIS.Count - 1));
         }
 
         private void UpdateTable2()
@@ -208,12 +211,10 @@ namespace Modelo
                     var role = _tspiRoles.ElementAt(index2);
                     values[index2] = role.InteractiveStyles[index];
                 }
+
                 dataGridView1.Rows.Add(values);
-                dataGridView1.Rows[index].HeaderCell.Value = _interactiveStyles.ElementAt(index);
+                dataGridView1.Rows[index].HeaderCell.Value = _interactiveStyles.ElementAt(index)[0];
             }
-            dataGridView1.Rows[0].Selected = false;
-
-
         }
         private void UpdateTable()
         {
@@ -234,13 +235,15 @@ namespace Modelo
                 var role = _tspiRoles.ElementAt(index);
                 var serie = new Series
                 {
-                    //Name = $"{role.Name} - ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
-                    Name = $"{role.Name})",
+                    Name = $"{role.Name} - ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
+                    //Name = $"{role.Name})",
                     ChartType = SeriesChartType.Point
                 };
                 serie.Points.AddXY(role.X, role.Y);
                 chart1.Series.Add(serie);
             }
+            if (_currentIndexHistory > 0)
+                txbIS.Text = (_ISSelectedHistory.ElementAt(_currentIndexHistory - 1) + 1).ToString();
         }
         private void UpdateChart()
         {
@@ -252,9 +255,6 @@ namespace Modelo
             {
                 UpdateChart2();
             }
-
-
-
             ///////////////////////////////////////////////////////////////////
             //chart1.Series.Clear();
             //var serie = new Series
@@ -281,71 +281,72 @@ namespace Modelo
             //chart1.Series.Add(serie);
             //chart1.Series.Add(serie2);
         }
-        private void GetNewXValues()
+        private void GetNewXValues()//Evoluciona los valores para un estilo interactivo aleatorio
         {
-            var newXValues = new List<double[]>();
-            for (var index = 0; index < _tspiRoles.Count; index++)
+            var newXValues = new List<double[]>();//Obtiene una lista de nuevos valores después de evolucionae
+            var a = GetRandomIs();//Obtiene de manera aleatoria el IS o vector que evolucionará
+            _ISSelectedHistory.Add(a);
+            for (var index = 0; index < _interactiveStyles.Count; index++)//Obtiene el vector que va a evolucionar
             {
-                newXValues.Add(GetNewXValue(_tspiRoles[index]));
-            }
-            _interactiveStylesHistory.Add(newXValues);
-            UpdateInteractiveStyles();
-        }
-        private double[] GetNewXValue(TSPiRole role)
-        {
-            var newX = new double[12];
-            for (var index = 0; index < _interactiveStyles.Count; index++)
-            {
-                var n = 0;
-                var step1 = 0.0; // here jeje
+                var vector = new double[_tspiRoles.Count];
                 for (var index2 = 0; index2 < _tspiRoles.Count; index2++)
                 {
-                    var nj = _tspiRoles[index2];
-                    if (role == nj) continue;
-                    if (Distance(role, nj)[0] > _ratio) continue;
-                    step1 += F(nj.InteractiveStyles[index]);
+                    vector[index2] = _tspiRoles[index2].InteractiveStyles[index];
+                }
+                newXValues.Add(vector);
+            }
+
+            var newVector = GetNewXValue(newXValues[a]);
+            newXValues[a] = newVector;
+            _interactiveStylesHistory.Add(newXValues);
+            UpdateInteractiveStyles(newVector);
+        }
+        private double[] GetNewXValue(double[] vector)
+        {
+            if (vector == null) throw new ArgumentNullException(nameof(vector));
+            var newVector = new double[_tspiRoles.Count];
+            for (var index1 = 0; index1 < _tspiRoles.Count; index1++)
+            {
+                var step1 = 0.0;
+                var n = 0;
+                for (var index2 = 0; index2 < _tspiRoles.Count; index2++)
+                {
+                    if(index1 == index2) continue;
+                    var d = Distance(_tspiRoles[index1], _tspiRoles[index2]);
+                    var m = d[0];
+                    if (m > _ratio) continue;//Si la magnitud es mayor al radio establecido
                     n++;
-                }
-                if(n != 0)
-                {
-                    var step2 = (_epsilon / n) * step1;
-                    var x = role.InteractiveStyles[index];
-                    var step3 = (1 - _epsilon) * F(x);
-                    var result = step3 + step2;
-                    newX[index] = result * 5;
-                }
-                else
-                {
-                    var step2 =  step1;
-                    var x = role.InteractiveStyles[index];
-                    var step3 =  F(x);
-                    var result = step3 + step2;
-                    newX[index] = result * 5;
+
+                    step1 += F(vector[index2]);
                 }
 
+                if (n > 0)
+                    newVector[index1] = (1 - _epsilon) * F(vector[index1]) + (_epsilon / n) * step1;
+                else
+                    newVector[index1] = F(vector[index1]);
+
             }
-            return newX;
+
+            return newVector;
         }
         private double F(double x) //F da numeros negativos 
         {
-            x /= 5;
-            var f = _r * (x) * (1 - (x));
-            //return f;
-            return f;
+            x /= 5; //X se divide entre 5 para que de un valor entre 0 y 1
+            var f = _r * x * (1 - x);//Funcion de x
+            return f * 5;
         }
-        private void GetNextPosition()
+        private void GetNextPosition()//Funcion Inicial para obtener la nueva posicion (X, Y) de todos los roles (Puntos en el gráfico)
         {
-            var newPoints = new List<double[]>();
-            var a = GetRandomIS();
-            //var a = 0;
-            for (var index = 0; index < _tspiRoles.Count; index++)
+            var newPoints = new List<double[]>();//Crea una ueva lista de posiciones (x, y) que serán los que se calcuarán
+            var a = _ISSelectedHistory[_currentIndexHistory - 1];//Obtiene de manera aleatoria un estilo interactivo
+            for (var index = 0; index < _tspiRoles.Count; index++)//Recorre cada uno de los roles para calcular su nueva posicion (X, Y)
             {
-                var rol = _tspiRoles.ElementAt(index);
-                var newPos = new[] { PosX(rol, a), PosY(rol, a) };
-                newPoints.Add(newPos);
+                var rol = _tspiRoles.ElementAt(index);//Obtiene el rol en la posicion (index) de la iteración
+                var newPos = new[] { PosX(rol, a), PosY(rol, a) };//Obtiene la nueva posición (X, Y) para Ri con el estilo interactivo a
+                newPoints.Add(newPos);//Agrega los nuevos puntos del rol a la lista de nuevos puntos
             }
-            _pointsHistory.Add(newPoints);
-            UpdatePoints();
+            _pointsHistory.Add(newPoints);//Agrega todos los puntos a la historia
+            UpdatePoints();//Manda actualizar los puntos en la gráfica
         }
         private void UpdateInteractiveStyles()
         {
@@ -354,6 +355,17 @@ namespace Modelo
             {
                 var role = _tspiRoles[index];
                 role.InteractiveStyles = values[index];
+            }
+            UpdateTable();
+        }
+
+        private void UpdateInteractiveStyles(double[] newVector)
+        {
+            var a = _ISSelectedHistory[_currentIndexHistory - 1];
+            for (var index = 0; index < _tspiRoles.Count; index++)
+            {
+                var role = _tspiRoles[index];
+                role.InteractiveStyles[a] = newVector[index];
             }
             UpdateTable();
         }
@@ -385,7 +397,7 @@ namespace Modelo
                 var d = Distance(rol, n);
                 posX = d[1];
                 var m = d[0];
-                if (m > _ratio) //Si la magnitud es mayo al radio establecido
+                if (m > _ratio) //Si la magnitud es mayor al radio establecido
                 {
                     continue;
                 }
@@ -407,12 +419,12 @@ namespace Modelo
             var step4 = _gamma * step1 * step3;
             var result = posX + step4;
 
-            if (result > _yMax)
-                result %= _yMax;
+            if (result > _yMaxChart)
+                result %= _yMaxChart;
             if (result < 0)
             {
-                result %= _yMax;
-                result += _yMax;
+                result %= _yMaxChart;
+                result += _yMaxChart;
             }
             return result;
 
@@ -454,12 +466,12 @@ namespace Modelo
             var step4 = _gamma * step1 * step3;
             var result = posY + step4;
 
-            if (result > _yMax)
-                result %= _yMax;
+            if (result > _yMaxChart)
+                result %= _yMaxChart;
             if (result < 0)
             {
-                result %= _yMax;
-                result += _yMax;
+                result %= _yMaxChart;
+                result += _yMaxChart;
             }
             return result;
         }
@@ -471,10 +483,10 @@ namespace Modelo
             var y1 = role1.Y;
             var x2 = role2.X;
             var y2 = role2.Y;
-            var nx1 = role1.X + _xMax;
-            var nx2 = role1.X - _xMax;
-            var ny1 = role1.Y + _yMax;
-            var ny2 = role1.Y - _yMax;
+            var nx1 = role1.X + _xMaxChart;
+            var nx2 = role1.X - _xMaxChart;
+            var ny1 = role1.Y + _yMaxChart;
+            var ny2 = role1.Y - _yMaxChart;
             distances.Add(new [] {Distance(x1, y1, x2, y2), x1, y1});
             distances.Add(new [] {Distance(nx1, y1, x2, y2), nx1, y1});
             distances.Add(new [] {Distance(nx2, y1, x2, y2), nx2, y1});
@@ -501,14 +513,16 @@ namespace Modelo
             if (_currentIndexHistory < _pointsHistory.Count - 1)
             {
                 _currentIndexHistory = _pointsHistory.Count - 1;
-                UpdateInteractiveStyles();
                 UpdatePoints();
+                UpdateInteractiveStyles();
             }
 
             _currentIndexHistory++;
             lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count + 1}";
             GetNewXValues();
             GetNextPosition();
+
+
         }
 
         private void pboxPrevious_Click(object sender, EventArgs e)
@@ -614,23 +628,45 @@ namespace Modelo
             txbR.Text = _r.ToString(CultureInfo.InvariantCulture);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        protected virtual void button1_Click(object sender, EventArgs e)
         {
-            var text = "";
-            for(var index = 0; index < _interactiveStyles.Count; index++)
-            {
-                for(var index2 = 0; index2 < _tspiRoles.Count; index2++)
-                {
-                    text += _tspiRoles.ElementAt(index2).InteractiveStyles.ElementAt(index) + ",";
-                }
-                text += "\n";
-            }
-            FileStream f = new FileStream("output.txt", FileMode.Create);
-            StreamWriter s = new StreamWriter(f);
+            //var text = "";
+            //for(var index = 0; index < _interactiveStyles.Count; index++)
+            //{
+            //    for(var index2 = 0; index2 < _tspiRoles.Count; index2++)
+            //    {
+            //        text += _tspiRoles.ElementAt(index2).InteractiveStyles.ElementAt(index) + ",";
+            //    }
+            //    text += "\n";
+            //}
+            //FileStream f = new FileStream("output.txt", FileMode.Create);
+            //StreamWriter s = new StreamWriter(f);
 
-            s.WriteLine(text);
-            s.Close();
-            f.Close();
+            //s.WriteLine(text);
+            //s.Close();
+            //f.Close();
+
+            dataGridView1.ClearSelection();
+        }
+
+        private void txbR_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txbEpsilon_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txbRatio_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txbGamma_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

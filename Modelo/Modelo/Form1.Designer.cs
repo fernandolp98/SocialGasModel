@@ -28,15 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, "2,0");
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, "1,0");
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, "2,0");
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txbIS = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.txbRatio = new System.Windows.Forms.TextBox();
             this.txbEpsilon = new System.Windows.Forms.TextBox();
             this.txbR = new System.Windows.Forms.TextBox();
@@ -106,7 +108,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(8, 458);
+            this.button1.Location = new System.Drawing.Point(12, 522);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 18;
@@ -116,6 +118,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txbIS);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txbRatio);
             this.groupBox1.Controls.Add(this.txbEpsilon);
             this.groupBox1.Controls.Add(this.txbR);
@@ -127,10 +131,33 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 292);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(166, 160);
+            this.groupBox1.Size = new System.Drawing.Size(166, 190);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Parámetros";
+            // 
+            // txbIS
+            // 
+            this.txbIS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txbIS.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txbIS.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbIS.ForeColor = System.Drawing.SystemColors.Window;
+            this.txbIS.Location = new System.Drawing.Point(98, 141);
+            this.txbIS.Name = "txbIS";
+            this.txbIS.Size = new System.Drawing.Size(62, 22);
+            this.txbIS.TabIndex = 25;
+            this.txbIS.Text = "-";
+            this.txbIS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(58, 141);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(34, 24);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "IS:";
             // 
             // txbRatio
             // 
@@ -142,8 +169,9 @@
             this.txbRatio.Name = "txbRatio";
             this.txbRatio.Size = new System.Drawing.Size(62, 22);
             this.txbRatio.TabIndex = 23;
-            this.txbRatio.Text = "4";
+            this.txbRatio.Text = "1";
             this.txbRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbRatio.TextChanged += new System.EventHandler(this.txbRatio_TextChanged);
             this.txbRatio.Validated += new System.EventHandler(this.txbRatio_Validated);
             // 
             // txbEpsilon
@@ -158,6 +186,7 @@
             this.txbEpsilon.TabIndex = 22;
             this.txbEpsilon.Text = ".2";
             this.txbEpsilon.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbEpsilon.TextChanged += new System.EventHandler(this.txbEpsilon_TextChanged);
             this.txbEpsilon.Validated += new System.EventHandler(this.txbEpsilon_Validated);
             // 
             // txbR
@@ -170,8 +199,9 @@
             this.txbR.Name = "txbR";
             this.txbR.Size = new System.Drawing.Size(62, 22);
             this.txbR.TabIndex = 21;
-            this.txbR.Text = "3";
+            this.txbR.Text = "3.56";
             this.txbR.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbR.TextChanged += new System.EventHandler(this.txbR_TextChanged);
             this.txbR.Validated += new System.EventHandler(this.txbR_Validated);
             // 
             // txbGamma
@@ -186,6 +216,7 @@
             this.txbGamma.TabIndex = 20;
             this.txbGamma.Text = ".001";
             this.txbGamma.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbGamma.TextChanged += new System.EventHandler(this.txbGamma_TextChanged);
             this.txbGamma.Validated += new System.EventHandler(this.txbGamma_Validated);
             // 
             // label6
@@ -375,69 +406,69 @@
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea3.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea3.AxisX.Interval = 0.5D;
-            chartArea3.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea3.AxisX.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX.MajorGrid.Interval = 1D;
-            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea3.AxisX.Maximum = 4D;
-            chartArea3.AxisX.Minimum = 0D;
-            chartArea3.AxisX.MinorGrid.Enabled = true;
-            chartArea3.AxisX.MinorGrid.Interval = 0.1D;
-            chartArea3.AxisX.MinorGrid.IntervalOffset = double.NaN;
-            chartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
-            chartArea3.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea3.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
-            chartArea3.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
-            chartArea3.AxisX2.Interval = 1D;
-            chartArea3.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea3.AxisY.Interval = 0.5D;
-            chartArea3.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea3.AxisY.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY.MajorGrid.Interval = 1D;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea3.AxisY.Maximum = 4D;
-            chartArea3.AxisY.Minimum = 0D;
-            chartArea3.AxisY.MinorGrid.Enabled = true;
-            chartArea3.AxisY.MinorGrid.Interval = 0.1D;
-            chartArea3.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
-            chartArea3.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea3.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
-            chartArea3.BackColor = System.Drawing.Color.DimGray;
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
+            chartArea5.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea5.AxisX.Interval = 0.5D;
+            chartArea5.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea5.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea5.AxisX.MajorGrid.Interval = 1D;
+            chartArea5.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisX.Maximum = 4D;
+            chartArea5.AxisX.Minimum = 0D;
+            chartArea5.AxisX.MinorGrid.Enabled = true;
+            chartArea5.AxisX.MinorGrid.Interval = 0.1D;
+            chartArea5.AxisX.MinorGrid.IntervalOffset = double.NaN;
+            chartArea5.AxisX.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea5.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea5.AxisX.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea5.AxisX2.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
+            chartArea5.AxisX2.Interval = 1D;
+            chartArea5.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea5.AxisY.Interval = 0.5D;
+            chartArea5.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea5.AxisY.LineColor = System.Drawing.Color.White;
+            chartArea5.AxisY.MajorGrid.Interval = 1D;
+            chartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea5.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisY.Maximum = 4D;
+            chartArea5.AxisY.Minimum = 0D;
+            chartArea5.AxisY.MinorGrid.Enabled = true;
+            chartArea5.AxisY.MinorGrid.Interval = 0.1D;
+            chartArea5.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gray;
+            chartArea5.AxisY.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea5.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea5.AxisY.TitleForeColor = System.Drawing.Color.DimGray;
+            chartArea5.BackColor = System.Drawing.Color.DimGray;
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.BackColor = System.Drawing.Color.Gray;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            legend5.BackColor = System.Drawing.Color.Gray;
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(3, 3);
             this.chart1.Name = "chart1";
-            series5.BorderWidth = 2;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series5.LabelAngle = 90;
-            series5.LabelBackColor = System.Drawing.Color.DimGray;
-            series5.LabelForeColor = System.Drawing.Color.White;
-            series5.Legend = "Legend1";
-            series5.Name = "Serie";
-            series5.Points.Add(dataPoint5);
-            series5.XValueMember = "10";
-            series5.YValueMembers = "10";
-            series5.YValuesPerPoint = 2;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series6.Legend = "Legend1";
-            series6.Name = "Series2";
-            series6.Points.Add(dataPoint6);
-            series6.YValuesPerPoint = 2;
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
+            series9.BorderWidth = 2;
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series9.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series9.LabelAngle = 90;
+            series9.LabelBackColor = System.Drawing.Color.DimGray;
+            series9.LabelForeColor = System.Drawing.Color.White;
+            series9.Legend = "Legend1";
+            series9.Name = "Serie";
+            series9.Points.Add(dataPoint9);
+            series9.XValueMember = "10";
+            series9.YValueMembers = "10";
+            series9.YValuesPerPoint = 2;
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series10.Legend = "Legend1";
+            series10.Name = "Series2";
+            series10.Points.Add(dataPoint10);
+            series10.YValuesPerPoint = 2;
+            this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
             this.chart1.Size = new System.Drawing.Size(903, 604);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
@@ -485,42 +516,49 @@
             this.TL.HeaderText = "TL";
             this.TL.Name = "TL";
             this.TL.ReadOnly = true;
+            this.TL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // PM
             // 
             this.PM.HeaderText = "PM";
             this.PM.Name = "PM";
             this.PM.ReadOnly = true;
+            this.PM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // QM
             // 
             this.QM.HeaderText = "QM";
             this.QM.Name = "QM";
             this.QM.ReadOnly = true;
+            this.QM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // SM
             // 
             this.SM.HeaderText = "SM";
             this.SM.Name = "SM";
             this.SM.ReadOnly = true;
+            this.SM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DS
             // 
             this.DS.HeaderText = "DS";
             this.DS.Name = "DS";
             this.DS.ReadOnly = true;
+            this.DS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // IM
             // 
             this.IM.HeaderText = "IM";
             this.IM.Name = "IM";
             this.IM.ReadOnly = true;
+            this.IM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // TM
             // 
             this.TM.HeaderText = "TM";
             this.TM.Name = "TM";
             this.TM.ReadOnly = true;
+            this.TM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Form1
             // 
@@ -568,13 +606,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn QM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TM;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -588,6 +619,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pboxStop;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txbIS;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TM;
     }
 }
 
