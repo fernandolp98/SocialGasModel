@@ -13,11 +13,11 @@ namespace Modelo
     {
         readonly ManualResetEvent _event = new ManualResetEvent(true);
 
-        private readonly List<TSPiRole> _tspiRoles;
-        private readonly List<object[]> _interactiveStyles;
+        private List<TSPiRole> _tspiRoles;
+        private List<object[]> _interactiveStyles;
 
-        private readonly double _xMaxChart;
-        private readonly double _yMaxChart;
+        private double _xMaxChart;
+        private double _yMaxChart;
 
         private double _ratio;
         private double _gamma;
@@ -28,9 +28,9 @@ namespace Modelo
         private Thread _hilo;
 
 
-        private readonly List<List<double[]>> _pointsHistory;
-        private readonly List<List<double[]>> _interactiveStylesHistory;
-        private readonly List<int> _ISSelectedHistory;
+        private  List<List<double[]>> _pointsHistory;
+        private List<List<double[]>> _interactiveStylesHistory;
+        private List<int> _isSelectedHistory;
 
 
         private int _currentIndexHistory;
@@ -39,102 +39,176 @@ namespace Modelo
         public Form1()
         {
             InitializeComponent();
+            Restart();
+        }
 
-            _gamma = .001;
-            _epsilon = 0.2;
-            _r = 3.56;
-            _ratio = 1;
-            _xMaxChart = 4;
-            _yMaxChart = 4;
-
+        private void Restart()
+        {
+            _gamma = 0.0;
+            _epsilon = 0.0;
+            _r = 0.0;
+            _ratio = 0.0;
+            _xMaxChart = 0;
+            _yMaxChart = 0;
+            _tspiRoles = new List<TSPiRole>();
+            _interactiveStyles = new List<object[]>();
             _pointsHistory = new List<List<double[]>>();
             _interactiveStylesHistory = new List<List<double[]>>();
-            _ISSelectedHistory = new List<int>();
+            _isSelectedHistory = new List<int>();
             _currentIndexHistory = 0;
+            LoadData();
 
             chart1.ChartAreas[0].AxisX.Maximum = _xMaxChart;
             chart1.ChartAreas[0].AxisY.Maximum = _yMaxChart;
-
-            ///////////////////////////////////////////////////////////////////////////
-            //Inicializa normal
-            _tspiRoles = TSPiRole.getRoles();
-            _interactiveStylesHistory.Add(TSPiRole.GetInteractiveStyles());
-
-            _interactiveStyles = new List<object[]> { 
-                new object[]{ "DM", 1 }, 
-                new object[] { "AT", 1 }, 
-                new object[] { "FT", 1 }, 
-                new object[] { "AP", 1 }, 
-                new object[]{ "FC", 1 }, 
-                new object[]{ "TT", 1 }, 
-                new object[]{ "CY", 1 }, 
-                new object[] { "TR", 1 },
-                new object[] { "DS", 1 },
-                new object[] { "RS", 1 },
-                new object[] { "IM", 1 },
-                new object[]{ "CR", 1 }
-                };
+            txbGamma.Text = _gamma.ToString(CultureInfo.InvariantCulture);
+            txbEpsilon.Text = _epsilon.ToString(CultureInfo.InvariantCulture);
+            txbR.Text = _r.ToString(CultureInfo.InvariantCulture);
+            txbRatio.Text = _ratio.ToString(CultureInfo.InvariantCulture);
+            txbAxisX.Text = _xMaxChart.ToString(CultureInfo.InvariantCulture);
+            txbAxisY.Text = _yMaxChart.ToString(CultureInfo.InvariantCulture);
 
 
-            //{TR, AP, AP, AP, AP, AP, }
+            pboxSaveAxisX.Visible = false;
+            pboxSaveAxisY.Visible = false;
+            pboxSaveR.Visible = false;
+            pboxSaveEpsilon.Visible = false;
+            pboxSaveGamma.Visible = false;
+            pboxSaveRange.Visible = false;
+            pboxSaveRatio.Visible = false;
 
-            ////////////////////////////////////////////////////////////////////////////
-            //Divide entre 5 los valores de X
-            //for (var index = 0; index < 7; index++)
-            //{
-            //    var role = _tspiRoles.ElementAt(index);
-            //    for (var index2 = 0; index2 < 12; index2++)
-            //    {
-            //        role.InteractiveStyles[index2, 1] = (double)role.InteractiveStyles[index2, 1] / 5;
-            //    }
-            //}
-            //////////////////////////////////////////////////////////////////////////
-            //Carga 200 roles
-            //_tspiRoles = new List<TSPiRole>();
-            //for (var i = 0; i < 100; i++)
-            //{
-            //    if (i < 50)
-            //        _tspiRoles.Add(new TSPiRole { InteractiveStyles = new object[,] { { "t1", -1.0 } } });
-            //    else
-            //        _tspiRoles.Add(new TSPiRole { InteractiveStyles = new object[,] { { "t2", 1.0 } } });
-
-            //}
-            ///////////////////////////////////////////////////////////////////////////////
-            //Carga 4 puntos en las esquinas
-            //_tspiRoles = new List<TSPiRole>();
-            //_tspiRoles.Add(new TSPiRole { Name = "A", InteractiveStyles = new object[,] { { "", 1.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "B", InteractiveStyles = new object[,] { { "", 1.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "C", InteractiveStyles = new object[,] { { "", 2.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "D", InteractiveStyles = new object[,] { { "", 2.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "E", InteractiveStyles = new object[,] { { "", 3.0 } } });
-            //_tspiRoles.Add(new TSPiRole { Name = "F", InteractiveStyles = new object[,] { { "", 3.0 } } });
-
-
-            //var points = new List<double[]>();
-            //points.Add(new[] { 1.0, 3.0 });
-            //points.Add(new[] { 3.5, 2.0 });
-            //points.Add(new[] { 2.5, 1.0 });
-            //points.Add(new[] { 3.0, 3.5 });
-            //points.Add(new[] { 1.0, 1.0 });
-            //points.Add(new[] { 2.0, 1.5 });
-
-            //_currentIndexHistory = 0;
-            //_pointsHistory.Add(points);
-            //UpdatePoints();
-            ///////////////////////////////////////////////////////////////////////////////
-
-
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //////////////////////////////////////////////////////////////////////////////////
-            //Agrega valores random x,y
             SetRandomPoints();
             UpdateInteractiveStyles();
             UpdateTable();
-///////////////////////////////////////////////////////////////////////////////
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoadData()
+        {
+
+            if (File.Exists("initialData.txt"))
+            {
+                try
+                {
+                    using (var sr = new StreamReader("initialData.txt"))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            if (line.Contains("@gamma="))
+                            {
+                                var value = line.Split('=');
+                                var error = double.TryParse(value[1], out _gamma);
+                                if (!error)
+                                {
+                                    MessageBox.Show($@"El valor para gamma es incorrecto: {value[1]}. Revise su archivo initialData.txt");
+                                }
+                            }
+                            else if (line.Contains("@epsilon="))
+                            {
+                                var value = line.Split('=');
+                                var error = double.TryParse(value[1], out _epsilon);
+                                if (!error)
+                                {
+                                    MessageBox.Show($@"El valor para gamma es incorrecto: {value[1]}. Revise su archivo initialData.txt");
+                                }
+                            }
+                            else if (line.Contains("@r="))
+                            {
+                                var value = line.Split('=');
+                                var error = double.TryParse(value[1], out _r);
+                                if (!error)
+                                {
+                                    MessageBox.Show($@"El valor para r es incorrecto: {value[1]}. Revise su archivo initialData.txt");
+                                }
+                            }
+                            else if (line.Contains("@ratio="))
+                            {
+                                var value = line.Split('=');
+                                var error = double.TryParse(value[1], out _ratio);
+                                if (!error)
+                                {
+                                    MessageBox.Show($@"El valor para ratio es incorrecto: {value[1]}. Revise su archivo initialData.txt");
+                                }
+                            }
+                            else if (line.Contains("@xMaxChart"))
+                            {
+                                var value = line.Split('=');
+                                var error = double.TryParse(value[1], out _xMaxChart);
+                                if (!error)
+                                {
+                                    MessageBox.Show($@"El valor maximo para el eje X en la gráfica es incorrecto: {value[1]}. Revise su archivo initialData.txt");
+                                }
+                            }
+                            else if (line.Contains("@yMaxChart"))
+                            {
+                                var value = line.Split('=');
+                                var error = double.TryParse(value[1], out _yMaxChart);
+                                if (!error)
+                                {
+                                    MessageBox.Show($@"El valor maximo para el eje Y en la gráfica es incorrecto: {value[1]}. Revise su archivo initialData.txt");
+                                }
+                            }
+                            else if (line.Contains("@Roles"))
+                            {
+                                line = sr.ReadLine();
+                                var roles = line.Split(',');
+                                foreach (var rol in roles)
+                                {
+                                    _tspiRoles.Add(new TSPiRole(rol));
+                                }
+                            }
+                            else if (line.Contains("@interactiveStyles"))
+                            {
+                                line = sr.ReadLine();
+                                var interactiveStyles = line.Split(',');
+                                foreach (var interactiveStyle in interactiveStyles)
+                                {
+                                    var value = interactiveStyle.Split(':');
+                                    _interactiveStyles.Add(new object[] { value[0], int.Parse(value[1]) });
+                                }
+                            }
+                            else if (line.Contains("@DataTableStart"))
+                            {
+                                var interactiveStyles = new List<double[]>();
+                                while ((line = sr.ReadLine()) != "@DataTableEnd")
+                                {
+                                    if (line == null) continue;
+                                    var values = line.Split(',');
+                                    if (values.Length != _tspiRoles.Count)
+                                    {
+                                        MessageBox.Show($@"Se econtraron discrepancias al leer los valores de X. En una de las líneas no coincide con el número de roles ingresados. Ingrese un archivo válido.");
+                                        this.Close();
+                                    }
+                                    var values2 = new double[_tspiRoles.Count];
+                                    for (var index = 0; index < values.Length; index++)
+                                    {
+                                        values2[index] = double.Parse(values[index]);
+                                    }
+                                    interactiveStyles.Add(values2);
+                                }
+
+                                if (interactiveStyles.Count != _interactiveStyles.Count)
+                                {
+                                    MessageBox.Show($@"Se econtraron discrepancias al leer los valores de X. Hacen falta líneas para el número de estilos ingresados. Ingrese un archivo válido");
+                                    this.Close();
+                                }
+                                _interactiveStylesHistory.Add(interactiveStyles);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Ocurrió un error al leer el archivo initialData. Ingrese un archivo válido. " + e.Message );
+                }
+            }
+            else
+            {
+                MessageBox.Show(@"No se encontró el archivo initialData.txt para iniciar el programa");
+            }
         }
         private void SetRandomPoints()
         {
@@ -146,8 +220,8 @@ namespace Modelo
                 var seed = int.Parse(justNumbers.Substring(0, 4));
                 var random = new Random(seed);
 
-                var xValue = random.NextDouble() * (2 - 0) + 0;
-                var yValue = random.NextDouble() * (2 - 0) + 0;
+                var xValue = random.NextDouble() * (4 - 0) + 0;
+                var yValue = random.NextDouble() * (4 - 0) + 0;
                 var newPoints = new[] { xValue, yValue };
                 points.Add(newPoints);
             }
@@ -163,7 +237,7 @@ namespace Modelo
             var random = new Random(seed);
             return random.Next(min, max);
         }
-        private int GetRandomIs()//Retorna el IS rándom basandose en una lista de elementos ordenados aleatoriamente dados sus pesos
+        private int GetRandomIs()
         {
             var interactiveStyles = new List<string>();
             var isSelect = new List<string>();
@@ -205,16 +279,16 @@ namespace Modelo
             dataGridView1.Rows.Clear();
             for (var index = 0; index < _interactiveStyles.Count; index++)
             {
-                var values = new object[7];
+                var values = new object[_tspiRoles.Count];
                 for (var index2 = 0; index2 < _tspiRoles.Count; index2++)
                 {
                     var role = _tspiRoles.ElementAt(index2);
                     values[index2] = role.InteractiveStyles[index];
                 }
-
                 dataGridView1.Rows.Add(values);
                 dataGridView1.Rows[index].HeaderCell.Value = _interactiveStyles.ElementAt(index)[0];
             }
+            txbIS.Text = _currentIndexHistory > 0 ? _interactiveStyles.ElementAt(_isSelectedHistory.ElementAt(_currentIndexHistory - 1))[0].ToString() : "-";
         }
         private void UpdateTable()
         {
@@ -236,14 +310,11 @@ namespace Modelo
                 var serie = new Series
                 {
                     Name = $"{role.Name} - ({Math.Round(role.X, 2)}, {Math.Round(role.Y, 2)})",
-                    //Name = $"{role.Name})",
                     ChartType = SeriesChartType.Point
                 };
                 serie.Points.AddXY(role.X, role.Y);
                 chart1.Series.Add(serie);
             }
-            if (_currentIndexHistory > 0)
-                txbIS.Text = (_ISSelectedHistory.ElementAt(_currentIndexHistory - 1) + 1).ToString();
         }
         private void UpdateChart()
         {
@@ -255,38 +326,13 @@ namespace Modelo
             {
                 UpdateChart2();
             }
-            ///////////////////////////////////////////////////////////////////
-            //chart1.Series.Clear();
-            //var serie = new Series
-            //{
-            //    Name = $"Team 1",
-            //    ChartType = SeriesChartType.Point
-            //};
-            //var serie2 = new Series
-            //{
-            //    Name = $"Team 2",
-            //    ChartType = SeriesChartType.Point
-            //};
-            //for (var index = 0; index < _tspiRoles.Count / 2; index++)
-            //{
-            //    var role = _tspiRoles.ElementAt(index);
-            //    serie.Points.AddXY(role.X, role.Y);
-            //}
-            //for (var index = _tspiRoles.Count / 2; index < _tspiRoles.Count; index++)
-            //{
-            //    var role = _tspiRoles.ElementAt(index);
-
-            //    serie2.Points.AddXY(role.X, role.Y);
-            //}
-            //chart1.Series.Add(serie);
-            //chart1.Series.Add(serie2);
         }
-        private void GetNewXValues()//Evoluciona los valores para un estilo interactivo aleatorio
+        private void GetNewXValues()
         {
-            var newXValues = new List<double[]>();//Obtiene una lista de nuevos valores después de evolucionae
-            var a = GetRandomIs();//Obtiene de manera aleatoria el IS o vector que evolucionará
-            _ISSelectedHistory.Add(a);
-            for (var index = 0; index < _interactiveStyles.Count; index++)//Obtiene el vector que va a evolucionar
+            var newXValues = new List<double[]>();
+            var a = GetRandomIs();
+            _isSelectedHistory.Add(a);
+            for (var index = 0; index < _interactiveStyles.Count; index++)
             {
                 var vector = new double[_tspiRoles.Count];
                 for (var index2 = 0; index2 < _tspiRoles.Count; index2++)
@@ -338,8 +384,8 @@ namespace Modelo
         private void GetNextPosition()//Funcion Inicial para obtener la nueva posicion (X, Y) de todos los roles (Puntos en el gráfico)
         {
             var newPoints = new List<double[]>();//Crea una ueva lista de posiciones (x, y) que serán los que se calcuarán
-            var a = _ISSelectedHistory[_currentIndexHistory - 1];//Obtiene de manera aleatoria un estilo interactivo
-            for (var index = 0; index < _tspiRoles.Count; index++)//Recorre cada uno de los roles para calcular su nueva posicion (X, Y)
+            var a = _isSelectedHistory[_currentIndexHistory];//Obtiene de manera aleatoria un estilo interactivo
+            for (var index = _tspiRoles.Count - 1; index >= 0; index--)//Recorre cada uno de los roles para calcular su nueva posicion (X, Y)
             {
                 var rol = _tspiRoles.ElementAt(index);//Obtiene el rol en la posicion (index) de la iteración
                 var newPos = new[] { PosX(rol, a), PosY(rol, a) };//Obtiene la nueva posición (X, Y) para Ri con el estilo interactivo a
@@ -350,18 +396,23 @@ namespace Modelo
         }
         private void UpdateInteractiveStyles()
         {
-            var values = _interactiveStylesHistory.ElementAt(_currentIndexHistory);
+            var currentVaulues = _interactiveStylesHistory.ElementAt(_currentIndexHistory);
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
+                var values = new double[_interactiveStyles.Count];
+                for (var index2 = 0; index2 < _interactiveStyles.Count; index2++)
+                {
+                    values[index2] = currentVaulues.ElementAt(index2)[index];
+                }
                 var role = _tspiRoles[index];
-                role.InteractiveStyles = values[index];
+                role.InteractiveStyles = values;
             }
             UpdateTable();
         }
 
         private void UpdateInteractiveStyles(double[] newVector)
         {
-            var a = _ISSelectedHistory[_currentIndexHistory - 1];
+            var a = _isSelectedHistory[_currentIndexHistory];
             for (var index = 0; index < _tspiRoles.Count; index++)
             {
                 var role = _tspiRoles[index];
@@ -387,9 +438,8 @@ namespace Modelo
 
             var step1 = 0.0; //Primer suumatoria de la ecuación
             var step2 = 0.0;//Segunda sumatoria de la ecuación
-            for (var index = 0; index < _tspiRoles.Count; index++)
+            foreach (var n in _tspiRoles)
             {
-                var n = _tspiRoles[index];
                 if (n == rol) //Si es el mismo rol
                 {
                     continue;
@@ -433,11 +483,10 @@ namespace Modelo
         {
             var posY = rol.Y;
 
-            var step1 = 0.0; //Primer suumatoria de la ecuación
-            var step2 = 0.0;//Segunda sumatoria de la ecuación
-            for (var index = 0; index < _tspiRoles.Count; index++)
+            var step1 = 0.0; 
+            var step2 = 0.0;
+            foreach (var n in _tspiRoles)
             {
-                var n = _tspiRoles[index];
                 if (n == rol)
                 {
                     continue;
@@ -513,16 +562,14 @@ namespace Modelo
             if (_currentIndexHistory < _pointsHistory.Count - 1)
             {
                 _currentIndexHistory = _pointsHistory.Count - 1;
-                UpdatePoints();
-                UpdateInteractiveStyles();
             }
 
-            _currentIndexHistory++;
-            lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count + 1}";
             GetNewXValues();
             GetNextPosition();
-
-
+            _currentIndexHistory++;
+            UpdatePoints();
+            UpdateInteractiveStyles();
+            lblTime.Text = $@"{_currentIndexHistory + 1}/{_pointsHistory.Count}";
         }
 
         private void pboxPrevious_Click(object sender, EventArgs e)
@@ -596,75 +643,105 @@ namespace Modelo
             _sleep = trackBar1.Value * 100;
         }
 
-        private void txbRatio_Validated(object sender, EventArgs e)
+        protected virtual void button1_Click(object sender, EventArgs e)
+        {
+            Restart();
+            lblTime.Text = "1/1";
+        }
+
+        private void txbRatio_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveRatio.Visible) return;
+            pboxSaveRatio.Visible = true;
+        }
+        private void txbGamma_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveGamma.Visible) return;
+            pboxSaveGamma.Visible = true;
+        }
+
+        private void txbEpsilon_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveEpsilon.Visible) return;
+            pboxSaveEpsilon.Visible = true;
+        }
+
+        private void txbR_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveR.Visible) return;
+            pboxSaveR.Visible = true;
+        }
+        private void txbAxisX_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveAxisX.Visible) return;
+            pboxSaveAxisX.Visible = true;
+        }
+
+        private void txbAxisY_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveAxisY.Visible) return;
+            pboxSaveAxisY.Visible = true;
+
+        }
+        private void txRange_TextChanged(object sender, EventArgs e)
+        {
+            if (pboxSaveRange.Visible) return;
+            pboxSaveRange.Visible = true;
+        }
+        private void pboxSaveRatio_Click(object sender, EventArgs e)
         {
             var isNumber = double.TryParse(txbRatio.Text, out var newValue);
             if (isNumber)
                 _ratio = newValue;
             txbRatio.Text = _ratio.ToString(CultureInfo.InvariantCulture);
+            pboxSaveRatio.Visible = false;
         }
-
-        private void txbGamma_Validated(object sender, EventArgs e)
+        private void pboxSaveGamma_Click(object sender, EventArgs e)
         {
             var isNumber = double.TryParse(txbGamma.Text, out var newValue);
             if (isNumber)
                 _gamma = newValue;
             txbGamma.Text = _gamma.ToString(CultureInfo.InvariantCulture);
+            pboxSaveGamma.Visible = false;
         }
 
-        private void txbEpsilon_Validated(object sender, EventArgs e)
+        private void pboxSaveEpsilon_Click(object sender, EventArgs e)
         {
             var isNumber = double.TryParse(txbEpsilon.Text, out var newValue);
             if (isNumber)
                 _epsilon = newValue;
             txbEpsilon.Text = _epsilon.ToString(CultureInfo.InvariantCulture);
+            pboxSaveEpsilon.Visible = false;
         }
 
-        private void txbR_Validated(object sender, EventArgs e)
+        private void pboxSaveR_Click(object sender, EventArgs e)
         {
             var isNumber = double.TryParse(txbR.Text, out var newValue);
             if (isNumber)
                 _r = newValue;
             txbR.Text = _r.ToString(CultureInfo.InvariantCulture);
+            pboxSaveR.Visible = false;
         }
-
-        protected virtual void button1_Click(object sender, EventArgs e)
+        private void pboxSaveAxisX_Click(object sender, EventArgs e)
         {
-            //var text = "";
-            //for(var index = 0; index < _interactiveStyles.Count; index++)
-            //{
-            //    for(var index2 = 0; index2 < _tspiRoles.Count; index2++)
-            //    {
-            //        text += _tspiRoles.ElementAt(index2).InteractiveStyles.ElementAt(index) + ",";
-            //    }
-            //    text += "\n";
-            //}
-            //FileStream f = new FileStream("output.txt", FileMode.Create);
-            //StreamWriter s = new StreamWriter(f);
-
-            //s.WriteLine(text);
-            //s.Close();
-            //f.Close();
-
-            dataGridView1.ClearSelection();
+            var isNumber = double.TryParse(txbAxisX.Text, out var newValue);
+            if (isNumber)
+                _xMaxChart = newValue;
+            txbAxisX.Text = _xMaxChart.ToString(CultureInfo.InvariantCulture);
+            pboxSaveAxisX.Visible = false;
+            chart1.ChartAreas[0].AxisX.Maximum = _xMaxChart;
         }
 
-        private void txbR_TextChanged(object sender, EventArgs e)
+        private void pboxSaveAxisY_Click(object sender, EventArgs e)
         {
-
+            var isNumber = double.TryParse(txbAxisY.Text, out var newValue);
+            if (isNumber)
+                _yMaxChart = newValue;
+            txbAxisY.Text = _yMaxChart.ToString(CultureInfo.InvariantCulture);
+            pboxSaveAxisY.Visible = false;
+            chart1.ChartAreas[0].AxisY.Maximum = _yMaxChart;
         }
-
-        private void txbEpsilon_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txbRatio_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txbGamma_TextChanged(object sender, EventArgs e)
+        private void pboxSaveRange_Click(object sender, EventArgs e)
         {
 
         }
