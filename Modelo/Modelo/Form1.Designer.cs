@@ -84,6 +84,7 @@
             this.DS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnSave = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxSaveRange)).BeginInit();
@@ -109,6 +110,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.label2);
@@ -747,6 +749,16 @@
             this.TM.ReadOnly = true;
             this.TM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(142, 601);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 26;
+            this.btnSave.Text = "Guardar";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -835,6 +847,7 @@
         private System.Windows.Forms.PictureBox pboxSaveRange;
         private System.Windows.Forms.TextBox txRange;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 

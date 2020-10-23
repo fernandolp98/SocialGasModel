@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -744,6 +745,41 @@ namespace Modelo
         private void pboxSaveRange_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var patch = "saveFile.txt";
+            using (var sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Archivo Delimitado Por Comas (*.csv)|*.csv";
+                sfd.DefaultExt = "csv";
+                sfd.AddExtension = true;
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    patch = sfd.FileName;
+                }
+            }
+
+            var lines = "";
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                var str = "";
+                for (var index = 0; index < row.Cells.Count; index++)
+                {
+                    str += row.Cells[index].Value + ",";
+                }
+
+                lines += str + "\n";
+            }
+
+            using (var fs = new FileStream(patch, FileMode.Create, FileAccess.Write))
+            {
+                using (var sw = new StreamWriter(fs))
+                {
+                    sw.WriteLine(lines);
+                }
+            }
         }
     }
 }
